@@ -1,0 +1,302 @@
+---
+title: "Maille habitat : guide méthodologique"
+output:
+  word_document:
+    fig_width: 6
+    fig_height: 6
+    fig_caption: true
+---
+
+<!-- --- -->
+<!-- title: "Maille habitat : guide méthodologique" -->
+<!-- output: -->
+<!--   html_document: -->
+<!--     toc: true -->
+<!--     toc_float: -->
+<!--       collapsed: true -->
+<!--       smooth_scroll: false -->
+<!-- --- -->
+
+<style> body {text-align: justify}  </style>
+
+
+```{r include=FALSE} 
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,error = FALSE,message = FALSE) 
+require(tidyverse)
+require(maptools)
+require(cartogram)
+require(sp)
+require(cartography)
+require(leaflet)
+require(FactoMineR)
+require(RColorBrewer)
+require(corrplot)
+require(sf)
+require(spdep)
+
+load("/Volumes/BIGUSB/GEO2016/Habillage_FR.RData")
+load("/Volumes/BIGUSB/GEO2016/Couches.RData")
+load("../Zonages_inter.RData")
+load("Diffusion.RData")
+
+choix <- "zone_inter_fact40_40000"  #### A changer pour analyser une autre version 
+ ### Dans ce cas il faut décommenter la suite!!!
+
+# map <- lst_zon[[grep(choix,names(lst_zon))]]
+# ag <- liste_zonages[[grep(choix,names(liste_zonages))]]
+# map <- merge(map,ag,by.x=choix,by.y="zone")
+# proj4string(map) <-"+proj=lcc +lat_1=44 +lat_2=49.00000000002 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +units=m +no_defs" # L'info sur la projection n'est pas dans l'objet, on la remet
+
+#ana <- cartogram(map,"P14_LOG",itermax = 3) ## On fait un fonds anamorphosé en fonction du nombre de logements
+# don <- select(map@data,indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.13,
+#               indic.jeun.15,indic.transac.12,indic.soc.15,indic.suroc.15,indic.duroc.15,
+#               P14_LOG,P14_POP)
+# acp <- PCA(don,graph = F,ncp = 5,quanti.sup = c(10,11))
+# hc <- HCPC(acp,nb.clust = 6,consol = T,graph = F)
+# cl <- data.frame(zone=map[,choix],clust=hc$data.clust[,"clust"])
+
+# map <- merge(map,cl,by.x=choix,by.y=choix)
+# save(liste_zonages,lst_zon,zonages,map,ana,cl,file="Diffusion.RData")
+m <-  spTransform(map, "+init=epsg:4326") ## On reprojette avec mercator pour Leaflet
+```
+
+# Présentation
+
+## Pourquoi ?
+
+Le SDES met à disposition une nouvelle échelle géographique d'analyse des territoires, propre au logement : la *maille habitat*. Cette maille répond au constat que les "zonages" existants, qu'ils soient administratifs ou d'étude sont peu adaptés à l'étude des marchés du logement et plus généralement de l'habitat :
+
+- Les échelles administratives sont constituées sur des critères d'action publique et d'accès aux services publics ;
+- Les zonages d'études de l'Insee ne sont pas adaptés pour l'étude des marchés du logement :
+    + Les unités et aires urbaines ne forment pas une partition du territoire
+    + Les zones d'emploi et les bassins de vie (en raison de la logique d'agrégation utilisée pour les construire) comportent des zones très grandes dans les espaces urbains, qui masquent partiellement les disparités intra-urbaines, qui sont très forte sur le plan de l'habitat. 
+
+```{r}
+par(mfrow=c(1,2))
+plot(st_geometry(geo$bv),col="lightgrey",border="black",main="Bassins de vie")
+plot(st_geometry(geo$ze),col="lightgrey",border="black",main="Zones d'emploi")
+```
+
+*Sources : Insee *
+
+Les mailles habitat ont donc pour objectif de constituer une échelle pertinente pour **l'observation** et **l'analyse** des enjeux territoriaux liés à l'habitat. Elle permet de répondre à trois objectifs :
+
+- Lisser visuellement l'information pour donner des cartes lisibles
+- Conserver au maximum les disparités territoriales, tout en faisant ressortir les enjeux propres à l'habitat
+- Alimenter la connaissance et les diagnostics locaux
+
+Pour cela, le SDES a construit des ensembles de communes qui *se ressemblent* sur le domaine de l'habitat. Cette approche diffère de celle de l'Insee qui, pour ses zonages d'études, regroupe les communes qui sont fortement connectées les unes aux autres. Ce degré de connexion s'apprécie à l'aune du nombre de navettes domicile-travail entre les communes (pour les zones d'emploi) et les flux (théoriques) d'habitant se déplaçant de leur commune de résidence vers le pôle de services le plus proche (pour les bassins de vie). Pour plus d'information sur les maillages produits par l'Insee, consultez [cette page](https://www.insee.fr/fr/information/2114631).
+
+## Pour qui ?
+
+Ce nouveau maillage est destiné à plusieurs publics :
+
+- Les producteurs de données territorialisées sur le domaine de l'habitat. Le SDES diffusera par exemple un grand nombre d'indicateurs à cette maille de restitution, et elle constituera un référentiel géographique dans la plateforme de diffusion des données du SDES
+- Les acteurs nationaux cherchant à observer et analyser le domaine de l'habitat sur l'ensemble du territoire
+- Les acteurs locaux cherchant à situer leur territoire dans les disparités et dynamiques territoriales à l'oeuvre sur ce domaine, ou réaliser une monographie de leur périmètre d'intervention. La typologie mise en évidence permet à se titre de pouvoir comparer son territoire aux territoires qui lui sont comparables. Par ailleurs, les différentes versions de ce maillages mises à disposition permettent d'aborder la thématique selon une approche plus ou moins fine (voir le chapitre concernant les outils).
+
+
+## Pour quel usage ?
+
+La maille habitat est adaptée pour saisir les disparités, dynamiques, cohésion ou interdépendances des différents marchés du logement. Son but premier est l'analyse territoriale appliquée aux champs de la démographie et du logement. Elle peut et devrait systématiquement être utilisée, sur ces thématiques, en complément des autres grilles de lecture territoriales que sont par exemple le [ZAU](https://www.insee.fr/fr/metadonnees/definition/c1435) ou [la grille de densité](https://www.insee.fr/fr/information/2114627) de l'Insee.
+
+Pour cela, les éléments fournis offrent trois possiblilités : 
+
+- La première consiste à mobiliser la maille elle-même (ou une des autres mailles mises à disposition) afin de cartographier des indicateurs relevant du champ de l'habitat ;
+- La deuxième est d'agréger des données sur les catégories de la typologie en 6 classes présentée dans les résultats. Cette typologie constitue une grille d'analyse immédiate des différents marchés du logement ;
+- La dernière consiste à prendre en main les données et codes sources mis à disposition afin de réaliser un zonage *ad hoc* sur la thématique du logement, mais selon des enjeux ciblés et/ou localisés
+
+**Important :** Pour des besoins opérationnels, il est incontournable de croiser cette maille avec les mailles administratives. Elle n'est en effet **pas adaptée pour le portage de politiques publiques** : elle s'affranchit non seulement des limites administratives, mais surtout des échelles auxquelles se déploie la politique du logement. Dans cette perspective, les **EPCI**, les départements, et le **zonage ABC** du ministère de la Cohésion des Territoires sont les plus adaptés.
+
+Enfin, cette maille est pertinente pour l'analyse de l'habitat et de ses composantes (démographie, logement), mais n'est pas recommandée pour étudier des domaines tels que l'économie ou les services.
+
+## Plusieurs mailles ?
+
+Le SDES, en lien avec les deux comités d'experts qui ont appuyé le projet (voir annexes), a retenu **un scénario** parmi plusieurs possibles (voir chapitre 2). Ce choix permet de concilier à la fois les attentes nationales (lissage suffisant de l'information tout en respectant les disparités territoriales), et le maximum d'attentes locales (pertinence par rapport à la connaissance du terrain). Les autres scénarios explorés sont toutefois valables scientifiquement, et peuvent répondre à des besoins plus particuliers. C'est pourquoi l'utilisateur a le choix entre :
+
+- le zonage sélectionné par le SDES, qui permet une comparaison des territoires entre eux
+- un zonage alternatif parmi tous les scénarios examiné. Il peut être choisi à des fins d'études spécifiques (découpage plus fin ou plus grossier). Ce choix n'est pas recommandé pour une étude comparative.
+
+# Construction
+
+La constitution du maillage comporte trois grandes phases :
+
+- Sélection de 9 indicateurs permettant de dresser un portrait de chaque commune sur le plan de l'habitat.
+- Utilisation de la méthode de *régionalisation* SKATER (Spatial Klustering Analysis by Tree Edge Removal), région par région
+- Lissage des limites régionales
+
+
+## Les 9 indicateurs
+
+Choisis dans le cadre de deux comités regroupant des experts des territoires et du logement, les 9 indicateurs mobilisés sont représentatifs des marchés du logement, à la fois dans l'offre, la demande, et les équilibres de marché :
+
+- L'indicateur de jeunesse du parc : part des logement récents (construits après 1975) rapportés à la part des logements anciens (construits avant 1949). 
+- Durée d'occupation médiane des logements
+- Taux de transactions dans le marché de l'ancien (nombre de transactions rapporté au nombre de logements)
+- Part de logements sociaux
+- Part de logements en situation de suroccupation
+- Prix au $m^2$ dans l'ancien rapportés au revenu médian communal
+- Nombre de personnes par ménage
+- Part des résidences secondaires
+- Part de logements vacants
+
+Ces indicateurs sont calculés à partir de trois sources : recensements de la population, Filocom (Fichier des Logements localisés à la Commune), bases noratiales (PERVAL et BIEN). Certaines communes ne présentant pas de donnée pour un ou plusieurs indicateurs, une **imputation** a été réalisée en prenant (de façon spatialement récursive) la moyenne de cet indicateur sur les communes voisines. Ces indicateurs sont présentés en détail dans le rapport méthodologique consultable à **l'adresse suivante A AJOUTER**.
+Les données sont mises à disposition, à la fois au niveau communal, et sur toutes les autres mailles (scénario principal et alternatifs).
+
+C'est à partir de cette base de données que sont calculées les dissimilarités entre communes, qui vont guider à leur regroupement (ou non) dans une même maille.
+
+## Régionalisation
+
+La *régionalisation* désigne l'opération qui consiste à regrouper des unités géogrpahiques élémentaires en un ensemble *contigu*, selon des critères statistiques. Il existe un grand nombre de méthodes de régionalisation, dont une partie est comparée dans [ce document](http://journals.sagepub.com/doi/pdf/10.1177/0160017607301605). Le SDES a retenu l'algorithme SKATER (Spatial Klustering Analysis by Tree Edge Removal), implémenté et mis à disposition dans le package `spdep` du logiciel statistique libre **R**. Cet algorithme fonctionne en 4 étapes :
+
+- Construction de la matrice de contiguïté $\rightarrow$ obtention d'un *graphe* (un noeud = une commune et un lien = contiguïté entre commune)
+- Pondération de ce graphe avec les dissimilarités calulées à partir des indicateurs (distance euclidienne)
+- Construction de l'*arbre* portant minimal, en retenant le lien avec le voisin le plus ressemblant pour chaque noeud du graphe
+- Suppression itérative des branches de l'arbre maximisant la variance inter-classes des sous-graphes obtenus après élagage.
+
+**Figure : ilustration des étapes de SKATER sur les Hauts de Seine :**
+
+```{r,error=FALSE}
+par(mfrow=c(1,3))
+donnees <- merge(sansile,zonages,by.x="Codgeo",by.y="codgeo",all.x=T)
+a <- subset(donnees,dep=="92")
+contig <- poly2nb(a,row.names = a@data$Codgeo,queen = T)
+
+plot(a,border="lightgrey",main="Contiguité")
+plot(contig,coords=coordinates(a),label.areas = NA,add=T)
+
+dist <- nbcosts(contig,data=a@data[,"indic.dens"])
+dist <- nb2listw(contig,glist = dist,style = "C")
+mst <- mstree(dist)
+plot(a,border="lightgrey",main="Arbre portant minimal")
+plot(mst,coords=coordinates(a),label.areas = NA,add=T,lwd=3)
+
+res <- skater(mst[,1:2],data=a@data[,"indic.dens"],ncuts =3, crit=3,vec.crit = rep(1,length(a)))
+cols <- RColorBrewer::brewer.pal(length(res$edg),"Paired")
+
+plot(a, col=cols[res$groups],main="Partition")
+plot(mst,coords=coordinates(a),label.areas = NA,add=T,col="grey",lwd=3)
+```
+
+*Sources : calculs SDES*
+
+Les résultats donnés par cet algorithme diffèrent selon deux paramètres :
+
+- Le nombre final de mailles voulues. Etant donné que les travaux ont été menés région par région, c'est le nombre moyen de communes par maille qui a été utilisé pour déterminer ce paramètre (pour que le nombre final de mailles soit homogéne quelle que soit la taille de la région). Dans le cadre des exercices de simulation, ce nombre a varié entre 20 et 80.
+- Une taille minimum en termes de population. Deux seuils ont été testés pour chaque valeur du nombre de communes par maille : 40 000 et 50 000.
+
+Après concertation avec les membres des comités, c'est le scénario fixant le nombre moyen de communes par maille à 40, avec une taille minimale de 40 000 habitants qui a été retenu.
+
+# L'habitat au premier plan
+
+Un des principaux résultats de ce travail est que ce nouveau maillage permet de mettre au premier plan les disparités territoriales liées à l'habitat. En effet, les indicateurs sélectionnés, pris à la maille communale, mettent en évidence, en premier lieu, les clivages traditionnels entre les territoires [^1] : ceux-ci se distinguent avant tout par leur degré d'*urbanité*, essentiellement retracé par la densité de population et leur position dans les catégories du zonages en aires urbaines. Le maillage habitat permet de mettre au premier plan les clivages relatifs aux caractéristiques des marchés locaux du logement.
+
+[^1]: L'importance des différentes variables dans les disparités territoriales a été évalué à l'aide d'une décomposition de l'inertie des nuages de points dans des analyses en composantes principales (ACP)
+
+
+**Disparités territoriales selon la maille**
+
+Maille Communale   |   Maille logement 
+-------------------|--------------------
+Degré d'urbanité   | Degré de tension 
+Degré de tension   | Taille des ménages 
+Zones touristiques | Zones touristiques 
+
+C'est donc le degré de tension (défini par un pouvoir d'achat immobilier en retrait et une suroccupation des logements marquée) et la taille des ménages qui différencient le plus les mailles obtenues. On obtient, à partir des 9 indicateurs la typologie de mailles suivante :
+
+- Classe 1 : mailles détendues avec vacance et parc plutôt ancien, à dominante rurale
+- Classe 2 : mailles peu tendues avec grands ménages et faible vacances, en grande couronne des pôles urbains
+- Classe 3 : mailles assez tendues avec petits ménages, au coeur des pôles urbains hors Paris
+- Classe 4 : mailles assez tendues avec parc récent et faible vacance, dans les couronnes des aires urbaines dynamiques
+- Classe 5 : mailles tendues avec forte part de résidences secondaires, dans les espaces touristiques
+- Classe 6 : mailles très tendues des aires urbaines parisienne, marseillaise, et de la banlieue lilloise.
+
+**Figure : Classification des mailles habitat**
+
+```{r}
+cols <- brewer.pal(n = 6,name =  "Dark2")
+ordre <- unique(m$clust) %>% as.integer()
+colMap <- cols[ordre]
+typoLayer(spdf = map,var="clust",border=NA,col = colMap,legend.title.txt = "Type de maille")
+```
+
+*Sources : calculs SDES*
+
+Pour une analyse plus détaillée de la typologie, vous pouvez consulter le Datalab associé **REFERENCE A AJOUTER**
+
+# Présentation des outils
+
+## Mobiliser la typologie
+
+La typologie peut-être utilisée pour agréger des données relatives à l'habitat et obtenir ainsi des **données de cadrage** : elle permet de mettre en évidence les disparités et dynamiques des grands types de marchés du logement. Avec cette grille, on remarque par exemple immédiatement que la croissance de la population a été la plus forte dans la classe 4, ce qui contribue à expliquer le haut niveau de prix relatifs qu'on y trouve. Viennent ensuite les classe 5 puis 2. L'analyse de ce même indicateur au prisme du ZAU permet de mettre en évidence la dynamique à l'oeuvre dans les espaces urbains et périurbains, mais n'identifie pas la forte dynamique propre aux espaces à vocation touristique (voir la [fiche d'analyse de l'Observatoire des territoires](http://www.observatoire-des-territoires.gouv.fr/observatoire-des-territoires/fr/dynamiques-de-population) ).
+
+**Figure : évolution annuelle moyenne de la population entre 1999 et 2014**
+
+```{r}
+pop <- read.csv2("Data/RP_Hist.csv") %>% 
+  merge(zonages[,c("codgeo",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
+  merge(cl,by.x=choix,by.y=choix) %>%
+  group_by(clust) %>%
+  summarise(pop14 = sum(P14_POP),pop99=sum(D99_POP)) %>%
+  mutate(evol_pop=100*((pop14/pop99)^(1/15)-1),Classe=paste("Classe",clust))
+ggplot(data=pop,aes(x=Classe,weight=evol_pop,fill=Classe)) + geom_bar() +
+  ylab("Evolution de la population") + guides(fill=FALSE) + scale_fill_manual(values=cols)
+
+```
+
+*Sources : Insee RP2014, calculs SDES*
+
+## Mobiliser la maille
+
+La maille peut être utilisée pour représenter tout indicateur lié à l'habitat au sens large. On peut par exemple représenter des données relatives à la démographie. Un fonds de carte anamorphosé en fonction du nombre de logements par maille est égalemet mis à disposition pour mettre en évidence les espaces urbains.
+
+**Figure : densité de population en 2014 et nombre de personnes par ménage (cartogramme)**
+
+```{r}
+pop <- read.csv2("Data/RP_Hist.csv") %>% 
+  merge(zonages[,c("codgeo","Surface",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
+  merge(cl,by.x=choix,by.y=choix) %>%
+  group_by_at(choix) %>%
+  summarise(pop14 = sum(P14_POP),surf=sum(Surface)) %>%
+  mutate(densite=pop14/surf)
+mapPop <- merge(map,pop,by.x=choix,by.y=choix,all.x=T)
+par(mfrow=c(1,2))
+choroLayer(spdf=mapPop,var="densite",col = carto.pal(n1=8,"red.pal"),nclass = 8,border=NA,legend.title.txt = "Densité",legend.pos = "topleft")
+title("Densité de population")
+choroLayer(spdf=ana,var="indic.menag.14",col = carto.pal(n1=8,"blue.pal"),nclass = 8,border=NA,legend.title.txt = "Taille des ménages",legend.pos = "topleft",legend.values.rnd = 2)
+title("Nombre de personnes \n par ménage")
+#propSymbolsLayer(spdf=mapPop,var="pop14",legend.pos = "topleft",col = "lightblue",border=NA)
+```
+
+*Sources : Insee RP2014, calculs SDES*
+
+## Mobiliser une autre maille
+
+Le SDES a exploré 16 scénarios avant d'arrêter, avec l'aide des comités associés, le choix sur la maille présentée. Toutefois, les autres versions sont mises à disposition pour répondre à d'éventuels besoins spécifiques. Ces maillages alternatifs sont livrés avec :
+
+- Leur composition communale
+- Les 9 indicateurs agrégés aux différentes échelles
+- 10 indicateurs d'hétérogénéité des mailles (un par indicateur + un score global). Il s'agit de l'écart-type de chaque indicateur (centré-réduit) calculé à partir des données communales. Le score est la somme de ces indicateurs.
+- Les contours des autres zonages (administratifs et d'étude)
+
+**FORME A DETERMINER : 16 shapefiles + shape des autres maillages ? DU SHINY ? DU GEOIDD ?**
+
+## Codes sources et données
+
+Si aucun des maillages pré-calculés ne convient à la problématique ou au périmètre, les codes sources ainsi que les données sont disponibles **DIRE OU** et permettent d'adapter la méthode utilisée, soit avec une maille initiale différente (iris, carreaux, cantons...), soit avec des indicateurs différents pour analyser une dimension plus précise (logement social par exemple). Attention, les temps de calcul augmentent exponentiellement avec le nombre de mailles initiales. Par exemple, il faut moins de 5 minutes pour traiter l'Île-de-France (1300 communes environ), mais plus de 3 heures pour le Grand-Est (environ 5000 communes).
+
+Si vous souhaitez l'appui du SDES pour la mise en oeuvre de la méthode, vous pouvez contacter **DIRE QUI. BOITE FONCTIONNELLE ?**
+
+# Annexe
+
+## Annexe 1 : composition des comités
+
+Deux comités ont été constitués : un comité de pilotage du projet et un comité technique. Ils étaient composés de personnalités des institutions suivantes :
+
+- Directions régionales de l'environnement, de l'aménagement et du logement : services habitat et / ou connaissance. Régions impliquées : Nouvelle Aquitaine, Hauts de France, Auvergne-Rhône-Alpes, Grand-Est et PACA.
+- Fédération nationale des agences d'urbanisme
+- Cerema (Centre d'études et d'expertise sur les risques, l'environnement, la mobilité et l'aménagement)
+- Insee (Directions de la diffusion et de l'action régionale et de la méthodologie, Division Logement)
+- Commissariat général à l'égalité des territoires
+- Direction de l'habitat, de l'urbanisme et des paysages du ministère de la cohésion des territoires
+- \'Ecole d'urbanisme de Paris

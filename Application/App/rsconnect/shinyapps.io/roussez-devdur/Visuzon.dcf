@@ -1,0 +1,13 @@
+name: Visuzon
+title: Visuzon
+username:
+account: roussez-devdur
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 239068
+bundleId: 1092049
+url: https://roussez-devdur.shinyapps.io/Visuzon/
+when: 1511423524.0592
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ._server.R|._ui.R|tests.R

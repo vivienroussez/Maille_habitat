@@ -1,0 +1,275 @@
+---
+title: "18,4% de la population réside dans un marché du logement tendu"
+output:
+  word_document:
+    fig_width: 8
+    fig_height: 8
+    fig_caption: true
+---
+
+<!-- --- -->
+<!-- title: "18,4% de la population réside dans un marché du logement tendu" -->
+<!-- output: -->
+<!--   html_notebook: -->
+<!--     toc: true -->
+<!--     toc_float: -->
+<!--       collapsed: false -->
+<!--       smooth_scroll: false -->
+<!-- --- -->
+
+
+
+<style> body {text-align: justify}  </style>
+
+
+
+**Proposition d'avant-propos :** Le logement entretient un lien organique avec les territoires. Tout d'abord, il a un lien *physique* avec eux: il participe intimement de la physionomie des espaces et de leur morphologie. De plus, tout comme le territoire, il se situe à la croisée de nombreuses thématiques : le marché du logement est profondément intégré aux autres marchés locaux : emploi, éducation, services, aménités naturelles... tous ces élements interviennent dans les choix résidentiels des ménages, et contribuent à aprécier ou déprécier un logement.
+
+Cette étude propose une analyse systématique des marchés du logement au prisme de l'analyse territoriale : quelles sont les disparités qui traversent ces marchés ? Quelles en sont les trajectoires ? Quel est le degré de cohésion dans ces espaces ? Autant d'éléments d'analyse qui permettent de replacer le logement au coeur des problématiques territoriales et qui offrent une grille de lecture originale des territoires.
+
+
+```{r include=FALSE} 
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE) 
+require(tidyverse)
+require(maptools)
+require(cartogram)
+require(sp)
+require(cartography)
+require(leaflet)
+require(FactoMineR)
+require(RColorBrewer)
+require(corrplot)
+require(sf)
+
+load("E:/GEO2016/Habillage_FR.RData")
+load("Zonages_inter.RData")
+choix <- "zone_inter_fact40_40000"  #### A changer pour analyser une autre version !!!
+map <- lst_zon[[grep(choix,names(lst_zon))]]
+ag <- liste_zonages[[grep(choix,names(liste_zonages))]]
+map <- merge(map,ag,by.x=choix,by.y="zone")
+proj4string(map) <-"+proj=lcc +lat_1=44 +lat_2=49.00000000002 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +units=m +no_defs" # L'info sur la projection n'est pas dans l'objet, on la remet
+reproj <-  spTransform(map, "+init=epsg:4326") ## On reprojette avec mercator pour Leaflet
+
+#ana <- cartogram(map,"P14_LOG",itermax = 3) ## On fait un fonds anamorphosé en fonction du nombre de logements
+don <- select(map@data,indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.13,
+              indic.jeun.15,indic.transac.12,indic.soc.15,indic.suroc.15,indic.duroc.15,
+              P14_LOG,P14_POP)
+acp <- PCA(don,graph = F,ncp = 5,quanti.sup = c(10,11))
+hc <- HCPC(acp,nb.clust = 6,consol = T,graph = F)
+cl <- data.frame(zone=map[,choix],clust=hc$data.clust[,"clust"])
+cols <- brewer.pal(n = 6,name =  "Dark2")
+m <- merge(reproj,cl,by.x=choix,by.y=choix)
+map <- merge(map,cl,by.x=choix,by.y=choix)
+# Calcul de la population par cluster
+aa <- group_by(m@data,clust) %>% summarise(pop=sum(P14_POP),log=sum(P14_LOG)) 
+xtabs(aa$pop~aa$clust) %>% prop.table()
+
+```
+
+**Introduction :** la majorité des marchés locaux du logement présentent une inadéquation entre offre et demande. D’une part, certains marchés, principalement d'Île de France, présentent une demande excédentaire, qui tire les prix à la hausse ; les situations de suroccupation y sont également plus fréquentes. D’autre part, dans les espaces de faible densité démographique, on trouve de nombreux territoires où les prix sont très modérés et les logements plus souvent vacants et moins peuplés. Entre ces deux extrêmes, les espaces périubains et les centre-villes des métropoles de province présentent des marchés plus équilibrés et homogènes.
+
+Au fil du temps, ces spécificités se renforcent et les marchés déjà en tension voient leurs déséquilibres se renforcer. A l'inverse, le ralentissement démographique et le vieillissement à l'oeuvre dans les espaces faiblement peuplés contribuent à la faible dynamique des marchés où la demande est déjà modérée. De même, ces marchés présentent un degré inégal d'homogénéité et les marchés hétérogènes de l'Est et du centre de la France tendent à devenir de plus en plus divers.
+
+
+# Les marchés du logement sont avant tout caractérisés par le pouvoir d'achat immobilier des ménages
+
+*Introduction : Neuf indicateurs ont été mobilisés pour décrire les marchés locaux du logement. Parmi eux, le pouvoir d'achat immobilier et le nombre de personnes par ménage sont ceux qui permettent de comprendre au mieux les disparités territoriales en termes de logement*
+
+Pour rendre compte de l'état des marchés locaux du logement, 9 indicateurs on été sélectionnés à l'échelle de la **maille habitat** (voir encadrés). Parmi eux, le prix du $m^2$ dans l'ancien rapporté au revenu médian communal, qui mesure le nombre d'années de revenu nécessaires pour acquérir 100 $m^2$, est celui pour lequel l'hétérogénéité est la plus forte. Il permet d'approcher les marchés du logement à la fois à travers les caractéristiques de l'offre(à travers le prix au $m^2$), mais également de la demande (dont on apprécie la solvabilité grâce au revenu médian). La représentation cartographique de cet indicateur met tout d'abord en évidence les centres urbains, ainsi que les espaces littoraux, de montagne, ou encore frontaliers. Il révèle non seulement les marchés du logement où les prix absolus sont très élevés (Île de France, Genevois français, littoraux...), mais également certains espaces où, malgré des prix relativement modérés, les faibles revenus des habitants rendent l'accès au logement aussi difficile ; c'est le cas par exemple pour Marseille ou Roubaix.
+
+** Figure : pouvoir d'achat immobilier des ménages **
+```{r}
+choroLayer(spdf=map,var="indic.prix_rev.13",border=NA,legend.title.txt = "Prix du m2 rapporté \n au revenu médian",nclass = 8,
+           legend.pos = "topleft")
+habille()
+```
+*Sources : bases notariales et Filocom, calculs SDES*
+
+Après le pouvoir d'achat immobilier, les marchés du logement se dinstinguent très nettement par la taille des ménages qui habitent les logements, en lien avec l'âge des population de ces marchés et leur position dans le cycle de vie. Cet indicateur démographique est essentiel pour comprendre les besoins en logement auquels font face les territoires.
+Ainsi, dans les villes-centre, où la population est plus jeune, on trouve des ménages plus petits. A l'inverse, dans les couronnes périurbaines, on trouve des ménages de taille importante : ce sont les espaces où les familles avec enfants sont les plus nombreux. Enfin, dans les espaces de faible densité, les ménages sont plus petits, en lien avec le vieillissement qui y est également observé.
+
+Les marchés du logement présentent des disparités prononcées sur les 7 autres indicateurs, mais dans une moindre mesure. Ils permettent toutefois de dégager des types de marchés du logement dont les caractéristiques dépassent ces deux seules dimensions que sont le pouvoir d'achat immobilier et la taille des ménages.
+
+**Figure : nombre de personnes par ménage**
+
+```{r}
+choroLayer(spdf=m,var="indic.menag.14",border=NA,legend.title.txt = "Nombre de personnes \n par ménage",nclass = 8,legend.values.rnd = 2)
+```
+*Sources : RP2014, calculs SDES*
+
+**Encadré : neuf indicateurs pour décrire les marchés du logement**
+
+Pour construire et analyser les **mailles logement**, le SDES a établi une liste de neuf indicateurs à la maille communale. Ces derniers permettent de prendre en compte les spécificité des territoires en matière de logement, et sont peu corrélés les uns aux autres. La description de ces indicateurs figure dans le rapport méthodologique **REFERENCE A AJOUTER**
+
+- L'indicateur de jeunesse du parc : part des logement récents (construits après 1975) rapportés à la part des logements anciens (construits avant 1949). 
+- Durée d'occupation médiane des logements
+- Taux de transactions dans le marché de l'ancien (nombre de transactions rapporté au nombre de logements)
+- Part de logements sociaux
+- Part de logements en situation de suroccupation
+- Prix au $m^2$ dans l'ancien rapportés au revenu médian communal
+- Nombre de personnes par ménage
+- Part des résidences secondaires
+- Part de logements vacants
+
+**Fin encadré**
+
+# Six types de marchés du logement
+
+*Introduction :  Les marchés du logement peuvent être regroupés en 6 grandes catégories : les marchés très tendus, les marchés touristiques, les marchés dynamiques en banlieue des aires urbaines attractives, les marchés de petits ménages des villes de province, les marchés de grands ménages des couronnes périurbaines, et enfin les marchés détendus des espaces de faible densité démographique*
+
+*Intro alternative : Les marchés du logement peuvent être regroupés en 6 grandes catégories retraçant essentiellement les disparités en termes de tension, de taille des ménages, d'ancienneté et de composition du parc. Ces catégories recouvrent des réalités territoriales bien définies*
+
+Ces disparités permettent de regrouper les marchés du logement en 6 grands types aux caractéristiques très distinctes : 
+
+- Classe 1 : Zones détendues avec vacance et parc plutôt ancien, à dominante rurale
+Les mailles appartenant à cette catégorie sont marquées par les prix relatifs les plus bas ; parallèlement, le taux de vacance y est le plus élevé et le parc le plus ancien. Les ménages y sont également plus petits, et la durée d'occupation des logements est plus élevée que la moyenne. Les mailles de cette classe se trouvent essentiellement dans les espaces de faible densité, hors des zones de montagne, principalement le long de la diagonale Nord-Est / Sud-Ouest. Leur empreinte sur le territoire est importante en termes de superficie, mais ces mailles regroupent un peu moins de 19 % de la population.
+
+- Classe 2 : Zones peu tendues avec grands ménages et faible vacances, en grande couronne des pôles urbains
+Ce groupe est le plus proche de la moyenne sur l'ensemble des indicateurs. Les prix y sont modérés relativement aux revenus, et la durée d'occupation plutôt élevée. La suroccupation des logements et le taux de vacances sont eux en retrait. Ces mailles se situent essentiellement en périphérie des principales aires urbaines et dessinent le réseau inter-urbain ; Près de 29 % de la population y réside.
+
+- Classe 3 : Zones assez tendues avec petits ménages, au coeur des pôles urbains hors Paris
+Cette classe de mailles présentent un pouvoir d'achat immobilier un peu en retrait par rapport aux deux précédentes, proche de la moyenne nationale. En revanche, les ménages y sont sgnificativement plus petits et la durée d'occupation en retrait. Ces mailles, contrairement aux deux types précédents, comprennent des logements sociaux. De fait, on les trouve au coeur des aires urbaines de provinces : ce sont donc des espaces urbains, où la population est plus jeune, donc avec une plus faible proportion de familles, ce qui explique la faible taille des ménages et le turnover plus important. Environ un quart de la population est regroupée dans ce type.
+
+
+**Figure : Ecart à la moyenne selon la classe **
+```{r}
+num <- select_if(m@data,is.numeric) %>% scale() %>% as.data.frame()
+don_cl <- data.frame(classe=paste("Classe",m@data$clust),num) %>% 
+          select(indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.13,indic.jeun.15,
+                 indic.transac.12,
+                 indic.soc.15,indic.suroc.15,indic.duroc.15,classe)
+# On renomme les variables pour faire un joli graphique
+names(don_cl)[1:9] <- c("Nb pers par ménages","Part résid. secondaires","Part log vacants",
+                        "Prix log rapportés aux revenus","Indice jeunesse",
+                        "Taux transactions",
+                        "Part log sociaux","Suroccupation","Durée occupation")
+don_cl <- group_by(don_cl,classe)  %>%
+          summarise_if(is.numeric,median,na.rm=T) %>%
+          gather(-classe,key="var",value="Ecart")
+ggplot(don_cl,aes(classe,var,fill=Ecart)) + geom_tile() + 
+  scale_fill_gradient2() + xlab("Catégorie") + ylab("Indicateur")
+``` 
+*Sources : Calculs SDES*
+
+- Classe 4 : Zones assez tendues avec parc récent et faible vacance, dans les couronnes des aires urbaines dynamiques
+Ces mailles sont en très petit nombre, mais sont très spécifique : le parc de logement y est très récent par rapport aux autres et le pouvoir d'achat en retrait par rapport aux 3 classes précédentes. Par ailleurs, la taille des ménages est plutôt importante et la suroccupation nettement en retrait. Elles se situent dans les espaces périurbains proches des aires urbaines dont la population a fortement crû ces dernières années. Par exemple, on y trouve l'entière banlieue de Toulouse, mais également la périphérie ouest de Bordeaux ou encore l'est de Lyon. L'attractivité résidentielle de ces mailles a donc conduit à des flux de construction de logement importants, mais s'est également traduit par un acroissement des prix. Elles regroupent seulement 2% de la population.
+
+- Classe 5 : Zones à faible pouvoir d'achat immobilier, forte part de résidences secondaires, dans les espaces touristiques
+Cette classe présente avant tout un pouvoir d'achat immobilier en retrait : les prix y sont élevés relativements aux revenus des habitants et une taux de suroccupation plus élevé. La caractéristique principale est cependant la forte part de résidences secondaires qu'on y trouve. De fait, ces mailles se situent dans les espaces à vocation touristique, littoraux et montagnards. Le marché des résidences secondaire y pousse les prix à la hausse et accroît le décalage avec les revenus des résidents, ce qui leur confère les caractéristiques de marchés tendus. Ces mailles regroupent environ 7% de la population.
+
+
+- Classe 6 : Zones à difficultés prononcées d'accès au logement
+Ce dernier groupe contient les marchés les plus tendus : le pouvoir d'achat immobilier y est nettement en retrait, et le taux de suroccupation des logements est élevé, tout comme le nombre de personnes par ménages. On y trouve également la plus forte proportion de logements sociaux. Ces mailles correspondent aux marchés tendus d'Île de France, ainsi que ceux où le pouvoir d'achat immobilier des ménages est en retrait du fait de faibles revenus (Roubais, Marseille). 18,4% de la population réside dans ces marchés dont l'empreinte géographique est toutefois très restreinte.
+
+**Figure : Les 6 types de marchés du logement **
+```{r}
+classe <- m$clust
+leaf.col <- colorFactor(palette = cols, classe)
+# Version leaflet
+# leaflet(data=m) %>%
+#     addTiles(attribution = "SLC3") %>%
+#     addProviderTiles(providers$OpenStreetMap) %>%
+#     addLegend(pal = leaf.col, values = classe, opacity = 1,position = "bottomleft") %>%
+#     addPolygons(stroke = T,color=leaf.col(classe),weight = 1,fillOpacity = .5,opacity = 3,
+#                 highlightOptions = highlightOptions(color = "white", weight = 2,bringToFront = TRUE),
+#                 popup=classe)
+
+# Version statique
+ordre <- unique(m$clust) %>% as.integer()
+colMap <- cols[ordre]
+typoLayer(spdf = m,var="clust",border=NA,col = colMap,legend.title.txt = "Type de maille")
+
+```
+*Sources : calculs SDES*
+
+
+
+-----------------------------------------------------------
+**Encadré : la construction des mailles habitat**
+
+Le SDES a lancé en 2017 un projet visant à contruire un maillage du territoire à même de rendre compte des disparités territoriales sur les enjeux propres au logement. En effet, ni les échelles administratives, ni les zonages d'études de l'Insee (zones d'emploi, bassins de vie) ne sont adaptées pour l'analyse localisée du logement, car elles mêlent dans les mêmes mailles des types différents (urbain et périurbains notamment).
+Le groupe de travail constitué pour ce projet a sélectionné les neuf indicateurs présentés ci-avant et choisit une méthode de *régionalisation* afin de regrouper les communes homogènes sur ces neuf dimensions dans des mailles habitat. La méthode retenue est l'algorithme *SKATER* (Spatial Klustering Analysis by Tree Edge Removal). Différentes simulations ont été menées pour déterminer la taille de ces mailles, et les résultats ont fait l'objet de tests au niveau régional.
+La constitution de ces mailles permet de mettre au premier plan les disparités propres au logement (pouvoir d'achat immobilier, taille des ménages), alors que la maille communale fait principalement ressortir les disparités lié au degré d'urbanité. Elle permet également de distinguer les villes-centre de leur périphérie, et donc d'isoler les enjeux propres à ces espaces très différents sur le plan du logement.
+Le guide méthodologique détaillant la démarche et les méthodes utilisées se trouve **sur cette page à ajouter**
+-----------------------------------------------------------
+
+
+# Cohésion et dynamique de ces marchés
+
+*Introduction : Ces marchés présentent divers degrés d'homogénéité, et notamment une diversité iomportante dans les espaces de faible densité. En outre, les trajectoires de ces marchés du logement tendent à renforcer leur spécificités. *
+
+La typologie précédente permet de mettre en évidence les grandes disparités qui traversent les différents marchés du logement. Mais ces marchés présentent de l'hétérogénéité également entre les communes qui les composent. Le score de diversité (voir encadré) montre des spécificités territoriales marquées. En premier lieu, il semble que l'urbain et le périurbain soient plus homogènes que les espaces de faible densité démographique. De plus, les mailles de la classe correspondant aux espaces à vocation touristique présentent une forte hétérogénité interne, tout comme la Normandie et le plateau de Langres. Une partie de la couronne périurbaine de Paris, à l'exception de l'Ouest présente également des marchés très disparates.
+A l'opposé, l'Ouest du pays apparaît plus homogène, notamment la Bretagne et les Pays de la Loire. Le département du Nord, ainsi que l'Alsace et le Lyonnais présentent également de moindres disparités internes.
+
+-------------------------------------
+**Encadré : le score de diversité **
+Pour mesurer les disparités internes aux marchés du logement, on calcule un score de diversité : il s'agit de la somme des écarts-types, calculés sur chacun des indicateurs (qui ont été centrés-réduits au préalable). Plus ce score est élevé, plus l'hétérogénéité de la maille considérée est importante. Certaines mailles n'étant constituées que d'une seule commune (généralement les villes-centres des aires urbaines), ce score n'est pas calculable.
+
+-------------------------------------
+
+
+** Figure : Score d'hétérogénéité par maille**
+```{r}
+num <- select(zonages,indic.menag,indic.rs,indic.vac,indic.prix_rev,indic.jeun,indic.transac,
+                 indic.soc,indic.suroc,indic.duroc) %>%
+  scale()
+cohes <- data.frame(codgeo=zonages$codgeo,maille=zonages[,choix],num) %>%
+  merge(cl,by.x="maille",by.y=choix) %>%
+  group_by(maille) %>%
+  summarise_if(is.numeric,sd)
+cohes$score <- apply(cohes[,-1],MARGIN = 1,sum)
+mapCohes <- merge(m,cohes,by.x=choix,by.y="maille",all.x=T)
+choroLayer(spdf=mapCohes,var = "score",border=NA,nclass = 8,legend.values.rnd = 1,
+           legend.title.txt = "Score de diversité")
+```
+
+
+L'analyse statique des indicateurs permet donc de mettre en évidence des disparités inter et intra-mailles. L'analyse de ces indicateurs *en évolution* montre la dynamique de ces espaces. Or, la corrélation entre les indicateurs pris en stock (c'est à dire à un instant T) et en évolution est systématiquement positive : la diagonale du graphique suivant illustre ces corrélations. Cela sgnifie donc que la trajectoire des marchés du logement est étroitement liée à leur situation. En d'autres termes, les caractéristiques de ces marchés ont tendance à se renforcer dans le temps. Par exemple, il existe une forte corrélation entre le niveau du pouvoir d'achat immobilier (prix rapportés aux revenus) et son évolution au cours du temps, ce qui signifie que les prix ont le plus progressé dans les mailles où ils sont les plus élevés. Le constat est similaire pour la durée d'occupation des logements qui a progresssé là où elle était déjà élevée. Sur les autres indicateurs, la corrélation est plus faible, mais toujours positive. 
+
+
+**Figure : Corrélation entre les indicateurs de stock et d'évolution
+
+```{r}
+a <- select(m@data,indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.13,indic.jeun.15,
+                 indic.transac.12,
+                 indic.soc.15,indic.suroc.15,indic.duroc.15)
+# On renomme les variables pour faire un joli graphique
+names(a)[1:9] <- c("Nb pers par ménages","Part résid. secondaires","Part log vacants",
+                        "Prix log rapportés aux revenus","Indice jeunesse",
+                        "Taux transactions",
+                        "Part log sociaux","Suroccupation","Durée occupation")
+
+b <- select(m@data,evo.menag,evo.rs,evo.vac,evo.prix_rev,evo.jeun,
+                 evo.transac,
+                 evo.soc,evo.suroc,evo.duroc)
+names(b)[1:9] <- c("Nb pers ménage","Part résid. secondaires","Part log vacants",
+                        "Prix rapp. revenus","Indice jeunesse",
+                        "Taux transactions",
+                        "Part log sociaux","Suroccupation","Dur. occupation")
+
+cc  <-  cor(a,b,use = "complete.obs") 
+cc  <- data.frame(Stocks=rownames(cc),cc) %>%
+  gather(key="Evolutions",value="Corrélation",-Stocks)
+ggplot(cc,aes(Stocks,Evolutions,fill=Corrélation)) + geom_tile() + 
+  scale_fill_gradient2() + xlab("Stocks") + ylab("Evolutions") + theme(axis.text.x = element_text(angle=90))
+```
+*Sources : calculs SDES*
+
+De même, le score de diversité appliqué aux indicateurs d'évolution présente une cartographie très semblable au score calculé à partir des indicateurs de stock : on retrouve la même distinction entre l'Est et l'Ouest du pays, ainsi que les autres spécificités territoriales, à l'exception de la couronne parisienne. Cela signifie que les marchés à fortes disparités présentent des trajectoires également très diverses entre les communes qui les composent. En d'autres termes, les disparités internes s'accroissent là où elles étaient déjà élevées.
+
+**Figure : Diversité interne des trajectoires**
+```{r}
+num <- select(zonages,evo.menag,evo.rs,evo.vac,evo.prix_rev,evo.anc,evo.transac,
+                 evo.soc,evo.suroc,evo.duroc) %>%
+  scale()
+cohes <- data.frame(codgeo=zonages$codgeo,maille=zonages[,choix],num) %>%
+  merge(cl,by.x="maille",by.y=choix) %>%
+  group_by(maille) %>%
+  summarise_if(is.numeric,sd)
+cohes$score <- apply(cohes[,-1],MARGIN = 1,sum)
+mapCohes <- merge(m,cohes,by.x=choix,by.y="maille",all.x=T)
+choroLayer(spdf=mapCohes,var = "score",border=NA,nclass = 8,legend.values.rnd = 1,
+           legend.title.txt = "Score de diversité")
+```
+*Sources : calculs SDES*
+

@@ -1,0 +1,13 @@
+name: Visuzon
+title: Visuzon
+username:
+account: vivienroussez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 243813
+bundleId: 1113411
+url: https://vivienroussez.shinyapps.io/Visuzon/
+when: 1512368065.67918
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ._Descriptif.Rmd|._server.R

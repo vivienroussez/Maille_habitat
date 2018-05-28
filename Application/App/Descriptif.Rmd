@@ -1,0 +1,51 @@
+---
+title: "Maille géographique d'analyse du logement <br> Description de l'outil de visualisation des simulations"
+output: html_notebook
+---
+
+# Contenu
+
+Le SDES a effectué 24 simulations qui peuvent être comparées avec l'outil. Ces résultats ont été obtenus en faisant varier :
+
+- Le nombre moyen de communes par zone (qui permet de déterminer indirectement le nombre de zones total). Il varie de la soluton optimale donnée par l'algorithme, qui donne le découpage le plus fin (1721 zones), puis de 40 jusqu'à 100 communes par zone qui aboutit à une partition en 430 zones avec le critère de population le plus restrictif (voir ci-après). Soit 8 possibilités
+- La population minimale de chaque zone : elle varie de 20 000 à 50 000 habitants (3 possibilités)
+
+Dans chaque partie de l'outil, l'utilsateur devra choisir la valeur de ces deux paramètres. **Le but de l'exercice consiste à trouver un consensus sur les valeurs des paramètres**.
+
+Pour des raisons de rapidité de développement, certaines parties de l'interface ne sont pas explicites : les mailles de restitutions sont identifiées par leur code (EPCI, bassins de vie...) et les noms des variables ne sont pas explicites (voir infra).
+
+# Interface
+
+L'interface se compose de trois parties différentes :
+
+- Visualisation locale : permet de visualiser une version du maillage à la fois, à une échelle infra-nationale (au choix : département, régions, EPCI, basins de vie, zones d'emploi). 4 cartes s'y affichent :
+    - Le rappel de la typologie synthétique sur le territoire choisi
+    - La population des "zones logements" qui intersectent le territoire choisi
+    - Deux cartes affichant la valeur de la **médiane** communale des indicateurs constitutifs du zonage. Tous les indicateurs envisagés y figurent, qu'ils aient participé ou non à la construction du zonage. L'utilisateur peut choisir les indicateurs représentés dans le menu de gauche
+- Visualisation nationale : permet de comparer deux simulations différentes sur un même indicateur à l'échelle nationale
+- Visualisation maille seule : permet de voir le découpage pour une simulation donnée à l'échelle nationale (sans représentation d'indicateur)
+
+# Liste des indicateurs
+
+Les indicateurs à dispositions sont :
+
+- indic.anc : part de logements anciens (construits avant 1949)
+- indic.jeun : indicateur de jeunesse du parc
+- indic.pauv_anc : la part de ménages à bas revenus dans un logement ancien
+- indic.dens : nombre de logements pour 1000 habitants
+- indic.duroc : durée d'occupation médiane
+- indic.transac : taux de transactions dans le marché de l'ancien
+- indic.soc :la part de logements sociaux
+- indic.tens.soc : indicateur de tension dans le social (nombre de demandes sur nombre d'attributions)
+- indic.suroc : la part de logements en situation de suroccupation
+- indic.prix_rev : les prix au $m^2$ dans l'ancien rapportés au revenu médian communal
+- indic.surface_pp : surface moyenne par personne
+- indic.menag : nombre de personne par ménage
+- indic.rs : part des résidences secondaires
+- indic.vac : taux de vacance
+- indic.loyer... : indicateurs sur les loyers des allocataires CAF
+
+
+# Utilisation avancée
+
+Pour les utilisateurs de R, il vous est possible de télécharger le "bundle" de l'application sur le site shinyapps.io pour réaliser vos propres traitements. Y figure notamment une base de données avec l'ensemble des indicateurs, découpages et fonds de carte utilisés par l'application. Contactez l'équipe projet pour plus d'informations si besoin
