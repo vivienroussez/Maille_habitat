@@ -1,4 +1,3 @@
-# salut
 require(tidyverse)
 require(cartogram)
 require(sp)
