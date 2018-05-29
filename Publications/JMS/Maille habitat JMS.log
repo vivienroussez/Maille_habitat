@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.23)  28 MAY 2018 16:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.23)  29 MAY 2018 16:58
 entering extended mode
 **"./Maille habitat JMS.tex"
 ("Maille habitat JMS.tex"
@@ -794,20 +794,20 @@ s
 ) ("Maille habitat JMS.aux")
 \openout1 = `"Maille habitat JMS.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -860,7 +860,7 @@ pp-pdf.mkii"
 \everyMPtoPDFconversion=\toks40
 )
 \AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring OFF on input line 30.
+Package hyperref Info: Link coloring OFF on input line 31.
 
 ("C:\Users\vivien.roussez\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\
 nameref.sty"
@@ -872,93 +872,175 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count136
 )
-LaTeX Info: Redefining \ref on input line 30.
-LaTeX Info: Redefining \pageref on input line 30.
-LaTeX Info: Redefining \nameref on input line 30.
+LaTeX Info: Redefining \ref on input line 31.
+LaTeX Info: Redefining \pageref on input line 31.
+LaTeX Info: Redefining \nameref on input line 31.
  ("Maille habitat JMS.out") ("Maille habitat JMS.out")
 \@outlinefile=\write3
 \openout3 = `"Maille habitat JMS.out"'.
 
-LaTeX Info: Redefining \degres on input line 30.
-LaTeX Info: Redefining \dots on input line 30.
-LaTeX Info: Redefining \up on input line 30.
+LaTeX Info: Redefining \degres on input line 31.
+LaTeX Info: Redefining \dots on input line 31.
+LaTeX Info: Redefining \up on input line 31.
 
 <head_jms2018.png, id=59, 455.301pt x 70.46326pt>
 File: head_jms2018.png Graphic file (type png)
  <use head_jms2018.png>
-Package pdftex.def Info: head_jms2018.png used on input line 33.
+Package pdftex.def Info: head_jms2018.png used on input line 34.
 (pdftex.def)             Requested size: 426.79134pt x 66.05267pt.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 46.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 47.
 
 ("C:\Users\vivien.roussez\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cm
 tt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+LaTeX Font Info:    Try loading font information for U+msa on input line 47.
 
 ("C:\Users\vivien.roussez\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\
 umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
+LaTeX Font Info:    Try loading font information for U+msb on input line 47.
 
 ("C:\Users\vivien.roussez\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\
 umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 58--59
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
 [1
 
 {C:/Users/vivien.roussez/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./
-head_jms2018.png>] [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 134.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 134.
+head_jms2018.png>] [2] <img/ACP.png, id=96, 551.05875pt x 419.31656pt>
+File: img/ACP.png Graphic file (type png)
+
+<use img/ACP.png>
+Package pdftex.def Info: img/ACP.png used on input line 115.
+(pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+
+Overfull \hbox (25.16402pt too wide) in paragraph at lines 123--148
+[][] 
+ []
+
+[3pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.149 
+       <./img/ACP.png>] <img/Typo_com.png, id=107, 551.05875pt x 419.31656pt>
+File: img/Typo_com.png Graphic file (type png)
+
+<use img/Typo_com.png>
+Package pdftex.def Info: img/Typo_com.png used on input line 161.
+(pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
+ [4pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.166 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.166 
+       <./img/Typo_com.png>]
+<img/SKATER.png, id=116, 551.05875pt x 419.31656pt>
+File: img/SKATER.png Graphic file (type png)
+ <use img/SKATER.png>
+Package pdftex.def Info: img/SKATER.png used on input line 188.
+(pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
+
+[5] <img/Methodo_decoupage.png, id=127, 614.295pt x 370.38374pt>
+File: img/Methodo_decoupage.png Graphic file (type png)
+
+<use img/Methodo_decoupage.png>
+Package pdftex.def Info: img/Methodo_decoupage.png used on input line 201.
+(pdftex.def)             Requested size: 430.00356pt x 259.26685pt.
+ [6pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.203 \end{center}
+                   <./img/SKATER.png>]
+<img/Decoupage.png, id=134, 614.295pt x 370.38374pt>
+File: img/Decoupage.png Graphic file (type png)
+ <use img/Decoupage.png>
+Package pdftex.def Info: img/Decoupage.png used on input line 212.
+(pdftex.def)             Requested size: 430.00356pt x 259.26685pt.
+
+[7pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.214 \end{center}
+                   <./img/Methodo_decoupage.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 232.
+ [8pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.232 \end{document}
+                     <./img/Decoupage.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 232.
  ("Maille habitat JMS.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 134.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 134.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 232.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 232.
 Package rerunfilecheck Info: File `"Maille habitat JMS".out' has not changed.
-(rerunfilecheck)             Checksum: 93AFD29355C7187416AD2AF018466D5D;1065.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 134.
+(rerunfilecheck)             Checksum: 8C74DB86580E4CB29FCD220C91DF9183;1068.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 232.
  ) 
 Here is how much of TeX's memory you used:
- 8618 strings out of 493323
- 125440 string characters out of 3126108
- 224412 words of memory out of 3000000
- 11968 multiletter control sequences out of 15000+200000
- 21611 words of font info for 60 fonts, out of 3000000 for 9000
+ 8669 strings out of 493323
+ 126128 string characters out of 3126108
+ 226412 words of memory out of 3000000
+ 11992 multiletter control sequences out of 15000+200000
+ 22286 words of font info for 61 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,11n,43p,910b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,12n,43p,910b,487s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
 c\dpi600\eccc1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\p
-k\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\vivien.roussez\AppData\Local
-\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\vivien.ro
-ussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1095.pk> 
+k\ljfour\jknappen\ec\dpi600\eccc1200.pk> <C:\Users\vivien.roussez\AppData\Local
+\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\vivien.ro
+ussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> 
 <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
-pi600\ecrm1200.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\l
-jfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\vivien.roussez\AppData\Local\Mi
-KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\vivien.rouss
-ez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:
+pi600\ecti1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\l
+jfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\vivien.roussez\AppData\Local\Mi
+KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\vivien.rouss
+ez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:
 \Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ectt1200.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
-ur\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTe
-X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\vivien.roussez\
-AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk><C:/Use
-rs/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmmi7.pfb><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr10.pfb><C:/Users/vivien.roussez/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "Maille habitat JMS.pdf" (3 pages, 153495 bytes).
+00\ecbx1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
+ur\jknappen\ec\dpi600\ectt1200.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTe
+X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\vivien.roussez\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Us
+ers\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
+ecbx2488.pk><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb><C:/Users/vivien.roussez/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/vivien.roussez
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:
+/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr8.pfb><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on "Maille habitat JMS.pdf" (8 pages, 294194 bytes).
 PDF statistics:
- 450 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
- 118 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 601 PDF objects out of 1000 (max. 8388607)
+ 45 named destinations out of 1000 (max. 500000)
+ 143 words of extra memory for PDF output out of 10000 (max. 10000000)
 

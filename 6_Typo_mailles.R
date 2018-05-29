@@ -23,5 +23,5 @@ cl <- data.frame(zone=map[,choix],clust=hc$data.clust[,"clust"])
 names(cl)[2] <- "typo_maille"
 zonages <- merge(zonages,cl,by=choix,all.x=T)
 
-save(liste_zonages,lst_zon,zonages,geo,lst_mailles,mapCom,file = "dat.RData")
+save(liste_zonages, lst_zon, zonages, geo, lst_mailles, mapCom, zonages, file = "dat.RData")
 

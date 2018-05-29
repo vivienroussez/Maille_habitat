@@ -34,30 +34,39 @@ require(corrplot)
 require(sf)
 require(spdep)
 
-load("/Volumes/BIGUSB/GEO2016/Habillage_FR.RData")
-load("/Volumes/BIGUSB/GEO2016/Couches.RData")
-load("../Zonages_inter.RData")
-load("Diffusion.RData")
+# load("/Volumes/BIGUSB/GEO2016/Habillage_FR.RData")
+# load("/Volumes/BIGUSB/GEO2016/Couches.RData")
 
-choix <- "zone_inter_fact40_40000"  #### A changer pour analyser une autre version 
- ### Dans ce cas il faut décommenter la suite!!!
+load("M:/GEOGRAPHIE/GEO2016/Habillage_FR.RData")
+load("../bdd_indic.RData")
+load("../dat.RData")
 
-# map <- lst_zon[[grep(choix,names(lst_zon))]]
-# ag <- liste_zonages[[grep(choix,names(liste_zonages))]]
-# map <- merge(map,ag,by.x=choix,by.y="zone")
-# proj4string(map) <-"+proj=lcc +lat_1=44 +lat_2=49.00000000002 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +units=m +no_defs" # L'info sur la projection n'est pas dans l'objet, on la remet
+#load("Diffusion.RData")
+
+choix <- "zone_inter_fact40_40000"  #### A changer pour analyser une autre version !!!
+map <- lst_zon[[grep(choix,names(lst_zon))]]
+ag <- liste_zonages[[grep(choix,names(liste_zonages))]]
+map <- merge(map,ag,by.x=choix,by.y="zone")
+proj4string(map) <-"+proj=lcc +lat_1=44 +lat_2=49.00000000002 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +units=m +no_defs" # L'info sur la projection n'est pas dans l'objet, on la remet
+reproj <-  spTransform(map, "+init=epsg:4326") ## On reprojette avec mercator pour Leaflet
 
 #ana <- cartogram(map,"P14_LOG",itermax = 3) ## On fait un fonds anamorphosé en fonction du nombre de logements
-# don <- select(map@data,indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.13,
-#               indic.jeun.15,indic.transac.12,indic.soc.15,indic.suroc.15,indic.duroc.15,
-#               P14_LOG,P14_POP)
-# acp <- PCA(don,graph = F,ncp = 5,quanti.sup = c(10,11))
-# hc <- HCPC(acp,nb.clust = 6,consol = T,graph = F)
-# cl <- data.frame(zone=map[,choix],clust=hc$data.clust[,"clust"])
+don <- select(map@data,indic.menag.14,indic.rs.14,indic.vac.14,indic.prix_rev.12,
+              indic.jeun.15,indic.transac.12,indic.soc.15,indic.suroc.15,indic.duroc.15,
+              P14_LOG,P14_POP)
 
-# map <- merge(map,cl,by.x=choix,by.y=choix)
-# save(liste_zonages,lst_zon,zonages,map,ana,cl,file="Diffusion.RData")
-m <-  spTransform(map, "+init=epsg:4326") ## On reprojette avec mercator pour Leaflet
+cl <- group_by(zonages,zone_inter_fact40_40000,typo_maille) %>% 
+  summarise() %>% 
+  mutate(lib_typo_maille=case_when(typo_maille==1~"1 - Mailles détendues \n à dominante rurale",
+                                   typo_maille==2~"2 - Mailles peu tendues \n des couronnes périurbaines",
+                                   typo_maille==3~"3 - Mailles assez tendues \n des pôles urbains de province",
+                                   typo_maille==4~"4 - Mailles tendues des couronnes \n des aires urbaines attractives",
+                                   typo_maille==5~"5 - Mailles tendues \n des espaces touristiques",
+                                   typo_maille==6~"6 - Mailles à difficultés \n prononcées d’accès au logement"))
+
+cols <- brewer.pal(n = 6,name =  "Dark2")
+m <- merge(reproj,cl,by.x=choix,by.y=choix)
+map <- merge(map,cl,by.x=choix,by.y=choix)
 ```
 
 # Présentation
@@ -73,8 +82,8 @@ Le SDES met à disposition une nouvelle échelle géographique d'analyse des ter
 
 ```{r}
 par(mfrow=c(1,2))
-plot(st_geometry(geo$bv),col="lightgrey",border="black",main="Bassins de vie")
-plot(st_geometry(geo$ze),col="lightgrey",border="black",main="Zones d'emploi")
+plot(lst_mailles$bv,col="lightgrey",border="black",main="Bassins de vie")
+plot(lst_mailles$ze,col="lightgrey",border="black",main="Zones d'emploi")
 ```
 
 *Sources : Insee *
@@ -158,20 +167,21 @@ La *régionalisation* désigne l'opération qui consiste à regrouper des unité
 
 ```{r,error=FALSE}
 par(mfrow=c(1,3))
-donnees <- merge(sansile,zonages,by.x="Codgeo",by.y="codgeo",all.x=T)
+donnees <- merge(mapCom,zonages,by.x="Codgeo",by.y="codgeo",all.x=T) %>%
+  merge(bdd_indic,by.x="Codgeo",by.y="codgeo")
 a <- subset(donnees,dep=="92")
 contig <- poly2nb(a,row.names = a@data$Codgeo,queen = T)
 
 plot(a,border="lightgrey",main="Contiguité")
 plot(contig,coords=coordinates(a),label.areas = NA,add=T)
 
-dist <- nbcosts(contig,data=a@data[,"indic.dens"])
+dist <- nbcosts(contig,data=a@data[,"indic.menag.14"])
 dist <- nb2listw(contig,glist = dist,style = "C")
 mst <- mstree(dist)
 plot(a,border="lightgrey",main="Arbre portant minimal")
 plot(mst,coords=coordinates(a),label.areas = NA,add=T,lwd=3)
 
-res <- skater(mst[,1:2],data=a@data[,"indic.dens"],ncuts =3, crit=3,vec.crit = rep(1,length(a)))
+res <- skater(mst[,1:2],data=a@data[,"indic.menag.14"],ncuts =3, crit=3,vec.crit = rep(1,length(a)))
 cols <- RColorBrewer::brewer.pal(length(res$edg),"Paired")
 
 plot(a, col=cols[res$groups],main="Partition")
@@ -215,9 +225,9 @@ C'est donc le degré de tension (défini par un pouvoir d'achat immobilier en re
 
 ```{r}
 cols <- brewer.pal(n = 6,name =  "Dark2")
-ordre <- unique(m$clust) %>% as.integer()
+ordre <- unique(as.factor(map$lib_typo_maille)) %>% as.integer()
 colMap <- cols[ordre]
-typoLayer(spdf = map,var="clust",border=NA,col = colMap,legend.title.txt = "Type de maille")
+typoLayer(spdf = map,var="lib_typo_maille",border=NA,col = colMap,legend.title.txt = "Type de maille")
 ```
 
 *Sources : calculs SDES*

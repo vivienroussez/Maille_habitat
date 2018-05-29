@@ -45,7 +45,7 @@ zon_admin <- read.csv2("Zonages/zon_admin.csv") %>%
   select(codgeo = CODGEO, zone_epci = EPCI, zone_emp = ZE2010, zone_bassin_vie = BV2012)
 
 zones <- mutate(zonages, zone_typo_commune = as.factor(classe)) %>%
-  merge(zon_admin) %>%
+  left_join(zon_admin) %>%
   select(codgeo, starts_with("zone"))
 
 liste_zon <- names(zones)[substr(names(zones),1,4) == "zone"]

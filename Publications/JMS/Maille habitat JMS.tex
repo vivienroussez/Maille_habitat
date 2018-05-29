@@ -16,6 +16,7 @@
 \usepackage[french]{babel}
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
+\usepackage{float}
 \pagestyle{fancy}
 
 \renewcommand{\headrulewidth}{0pt}
@@ -79,21 +80,89 @@ Les mailles habitat constuites par le SDES ont pour objectif de constituer une �
 
 Pour cela, le SDES a construit des ensembles de communes qui \emph{se ressemblent} sur le domaine de l'habitat. Cette approche diffère de celle de l'Insee qui, pour ses zonages d'études, regroupe les communes qui sont fortement connectées les unes aux autres. Ce degré de connexion s'apprécie à l'aune du nombre de navettes domicile-travail entre les communes (pour les zones d'emploi) et les flux (théoriques) d'habitant se déplaçant de leur commune de résidence vers le pôle de services le plus proche (pour les bassins de vie). Pour plus d'information sur les maillages produits par l'Insee, consultez \href{https://www.insee.fr/fr/information/2114631}{cette page}.
 
-\section{Sélectionner des indicateurs pertinents}
+\section{Sélectionner les indicateurs pertinents}
+
+Choisis dans le cadre de deux comités regroupant des experts des territoires et du logement, les 9 indicateurs mobilisés sont représentatifs des marchés du logement, à la fois dans l'offre, la demande, et les équilibres de marché.
 
 \subsection{Quels indicateurs}
 
+Ces indicateurs sont calculés à partir de trois sources : recensements de la population, Filocom (Fichier des Logements localisés à la Commune), bases notariales (PERVAL et BIEN). Certaines communes ne présentant pas de donnée pour un ou plusieurs indicateurs, une \textbf{imputation} a été réalisée en prenant (de façon spatialement récursive) la moyenne de cet indicateur sur les communes voisines. Ces indicateurs sont présentés en détail dans le rapport méthodologique disponible sur le site internet du SDES.
+
+\begin{enumerate}
+\item L'indicateur de jeunesse du parc : part des logement récents (construits après 1975) rapportés à la part des logements anciens (construits avant 1949). 
+\item Durée d'occupation médiane des logements
+\item Taux de transactions dans le marché de l'ancien (nombre de transactions rapporté au nombre de logements)
+\item Part de logements sociaux
+\item Part de logements en situation de suroccupation
+\item Prix au $m^2$ dans l'ancien rapportés au revenu médian communal
+\item Nombre de personnes par ménage
+\item Part des résidences secondaires
+\item Part de logements vacants
+\end{enumerate}
 
 
-
-\subsection{Cartographie des indicateurs}
+\subsection{Analyse de quelques indicateurs}
 
 \subsection{Validation des indicateurs}
 
 \subsubsection{Analyse en composantes principales}
 
+Pour valider le choix des indicateurs sélectionnés (plusieurs itérations ont été nécessaires), une analyse en composantes principales (ACP) a été réalisée sur la base des indicateurs retenus. L'objectif consistait à retenir un minimum d'indicateurs pertinents et surtout \textbf{non redondants}, mais en conservant également quelques mesures "incontournables" de l'état du marché du logement (la part de logements sociaux, notamment).
+
+\begin{center}
+\begin{figure}[H]
+\caption{ACP sur les indicateurs retenus}
+\includegraphics[scale=.7]{img/ACP.png}
+\end{figure}
+\end{center}
+
+Les résultats de l'ACP montrent que les indicateurs ne présentent pas de redondance d'information, ce qui aurait pu conduire à sur-pondérer une dimension (le clivage urbain / rural par exemple). Les 6 axes retenus permettent de mettre en lumière un certain nombre de caractéristiques territoriales, résumées dans le tableau suivant : \\
+
+\begin{figure}[H]
+\caption{Principaux axes factoriels}
+\begin{tabular}{| l | l | c | l |}
+\hline
+Axe factoriel & Variables constitutives       & Signe &  Disparités territoriales révélées \\
+\hline
+Axe 1         &Jeunesse du parc               & +    & Gradient urbain \\
+              &  Taille des ménages             & +  &    \\
+\hline
+Axe 2         &Prix                           & +    & Gradient de tension \\
+       & Suroccupation                  & +    & \\ 
+      &Taille des ménages             & -  &   \\
+\hline
+Axe 3         &Vacance                        & -    & Zones touristiques \\
+        &Logements sociaux              & -    &  \\
+        &Durée d'occupation             & +    & \\
+\hline
+Axe 4         &Taux de transactions           & +    & Coeurs des AU  \\
+                                           &  & & Marchés dynamiques de l'Ouest et du Nord \\
+\hline
+Axe 5         &Durée d'occupation             & +    & Zones Nord-Est (propriétaires) \\
+        &Social                         & +    & versus Sud et Sud-Est \\
+\hline
+Axe 6         & Suroccupation                  & +    & Couronnes périurbaines et \\
+                 & &                &  zones touristiques du Sud-Est \\
+\hline
+\end{tabular}
+\end{figure} 
+
+\vspace{.2cm}
+
+
 \subsubsection{Classification communale}
 
+
+Par la suite, on effectue une classification des communes par centres mobiles, opérée sur les coordonnées factorielles des 6 premiers axes. Cette classification permet de mettre en exergues six groupes de communes qui permettent de rendre compte des principales disparités territoriales attendues. 
+
+\begin{center}
+\begin{figure}[H]
+\caption{Classification des communes}
+\includegraphics[scale=.7]{img/Typo_com.png}
+\end{figure}
+\end{center}
+
+Ces types sont cohérents avec d'autres études déjà réalisées, soit sur la dimension territoriale, soit sur  le logement. Ils confirment le choix des indicateurs qui a été fait. C'est donc sur cette base qu'est faite la régionalisation.
 
 
 \section{La régionalisation}
@@ -113,11 +182,40 @@ Cet algorithme fonctionne en 4 étapes :
 
 Il peut donc être vu comme une forme de classification descendante hiérarchique opérée sur les liens de l'arbre portant minimal. Le fait de travailler à partir de cet arbre portant minimal plutôt que sur les n\oe uds du graphe garantit la contiguïté des mailles finales.
 
+\begin{center}
+\begin{figure}[H]
+\caption{Illustration des étapes de SKATER sur les Hauts de Seine}
+\includegraphics[scale=.7]{img/SKATER.png}
+\end{figure}
+\end{center}
+
 \subsection{Découper le problème}
+
+Cet algorithme est très couteux : sa complexité est en effet légèrement supérieure à $o(n^2)$, et il n'a pas été optimisé dans un langage plus efficace que R. En conséquence, il est impossible de traiter les près de 36000 communes françaises. En effet, le traitement de l'Île-de-France (moins de 1300 communes) prend environ 5 minutes, alors qu'il faut 3 heures pour le Grand-Est (environ 5000 communes). C'est pourquoi l'algorithme a été exécuté région par région. Toutefois, pour s'affranchir de ces limites administratives, on procède à un \emph{lissage} des frontières régionales. Pour cela, on identifie les zones qui touchent une frontière régionale et on refait un zonage à partir de l'ensemble des communes qui en font partie.\\
+L'ordre de grandeur du nombre de communes qui se trouvent dans les zones concernées est de 16 000. La difficulté liée au temps de calcul apparaît donc de nouveau. Pour contourner ce problème, il faut couper cet ensemble en plusieurs sous-ensembles de taille plus petite. Pour réaliser ce découpage, on a repéré le barycentre du pays. La zone se trouvant sur ce barycentre, ainsi que les zones contiguës constituent une première \emph{macro-zone}.
+
+
+\begin{center}
+\begin{figure}[H]
+\caption{Répartition des zones frontalières}
+\includegraphics[scale=.7]{img/Methodo_decoupage.png}
+\end{figure}
+\end{center}
+
+
+On répartit ensuite le reste des communes dans les 4 cadrans du repère orthonormé ayant pour origine ce barycentre. Toutefois, les axes de ce repère passant le long de frontières, on conserve en partie l'effet de frontière. Pour éviter se biais, on effectue une rotation du repère orthonormé de 45 degrés.
+Cette méthode fait néanmoins apparaître, selon les cas de figure, de très petites zones isolées, et des macro-zones qui ne sont pas contigües. Une dernière étape consiste donc à rattacher les isolats à la macro-zone contiguë de taille suffisante ou à séparer les parties non contiguës des grandes macro-zones.
+
+\begin{center}
+\begin{figure}[H]
+\caption{Découpage final en macro-zones}
+\includegraphics[scale=.7]{img/Decoupage.png}
+\end{figure}
+\end{center}
 
 \subsection{Les différentes simulations}
 
-
+L'algorithme fonctionne à l'aide de deux paramètres qui permettent de faire varier le résultat final : le nombre de mailles finales souhaitées et une taille minimale (en termes de nombre de communes, de population, de nombre de logements...). 
 
 \section{Caractérisation des mailles}
 
