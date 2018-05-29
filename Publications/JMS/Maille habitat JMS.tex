@@ -33,7 +33,7 @@
 \includegraphics[width=15cm]{head_jms2018.png} 
 \line(1,0){450}
 \vspace{5mm}
-\textbf{{\huge \'E}\Large LABORATION D'UNE MAILLE GEOGRAPHIQUE POUR LE LOGEMENT}
+\textbf{{\huge \'E}\Large LABORATION D'UNE MAILLE GEOGRAPHIQUE POUR L'HABITAT}
 \end{center}
 
 \begin{center}
@@ -79,47 +79,53 @@ Les mailles habitat constuites par le SDES ont pour objectif de constituer une �
 
 Pour cela, le SDES a construit des ensembles de communes qui \emph{se ressemblent} sur le domaine de l'habitat. Cette approche diffère de celle de l'Insee qui, pour ses zonages d'études, regroupe les communes qui sont fortement connectées les unes aux autres. Ce degré de connexion s'apprécie à l'aune du nombre de navettes domicile-travail entre les communes (pour les zones d'emploi) et les flux (théoriques) d'habitant se déplaçant de leur commune de résidence vers le pôle de services le plus proche (pour les bassins de vie). Pour plus d'information sur les maillages produits par l'Insee, consultez \href{https://www.insee.fr/fr/information/2114631}{cette page}.
 
-\section{Titre de niveau 1 numéroté}
+\section{Sélectionner des indicateurs pertinents}
 
-Texte
-
-Texte
-
-Texte
-
-\subsection{Titre de niveau 2 numéroté}
-
-Texte
-
-Texte
-
-Un exemple de note de bas de page\footnote{Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de page Note de bas de
-page Note de bas de page.}.
-
-\subsubsection{Titre de niveau 3 numéroté}
-
-Texte
-
-Texte
-
-Texte
+\subsection{Quels indicateurs}
 
 
-\section{Titre de niveau 1 numéroté}
 
-Texte
 
-Texte
+\subsection{Cartographie des indicateurs}
 
-Texte
+\subsection{Validation des indicateurs}
 
-\subsection{Titre de niveau 2 numéroté}
+\subsubsection{Analyse en composantes principales}
 
-Texte
+\subsubsection{Classification communale}
 
-Texte
 
-Texte
+
+\section{La régionalisation}
+
+La \textbf{régionalisation} désigne l'opération qui consiste à regrouper des unités géographiques élémentaires en un ensemble \textbf{contigu}, selon des critères statistiques. Il existe un grand nombre de méthodes de régionalisation, dont une partie est comparée dans \href{http://journals.sagepub.com/doi/pdf/10.1177/0160017607301605}{cet article}. Le SDES a retenu l'algorithme SKATER (Spatial Klustering Analysis by Tree Edge Removal), implémenté et mis à disposition dans le package \textsc{spdep} du logiciel statistique libre\textsc{R}.
+
+\subsection{L'algorithme SKATER}
+
+Cet algorithme fonctionne en 4 étapes :
+
+\begin{enumerate}
+\item Construction de la matrice de contiguïté $\rightarrow$ obtention d'un \emph{graphe} (un noeud = une commune et un lien = relation de contiguïté entre deux communes)
+\item Pondération de ce graphe avec les dissimilarités calculées à partir des indicateurs (distance euclidienne)
+\item Construction de l'\textbf{arbre} portant minimal, en retenant le lien avec le voisin le plus ressemblant pour chaque n\oe ud du graphe
+\item Suppression itérative des branches de l'arbre maximisant la variance inter-classes des sous-graphes obtenus après élagage.
+\end{enumerate}
+
+Il peut donc être vu comme une forme de classification descendante hiérarchique opérée sur les liens de l'arbre portant minimal. Le fait de travailler à partir de cet arbre portant minimal plutôt que sur les n\oe uds du graphe garantit la contiguïté des mailles finales.
+
+\subsection{Découper le problème}
+
+\subsection{Les différentes simulations}
+
+
+
+\section{Caractérisation des mailles}
+
+\subsection{L'habitat au premier plan}
+
+\subsection{Typologie des mailles}
+
+\subsection{Cohésion et dynamique de ces mailles}
 
 \nocite{*}
 %\bibliographystyle{acm}
