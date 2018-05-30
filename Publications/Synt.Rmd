@@ -1,22 +1,21 @@
 ---
-title: "Maille habitat : une nouvelle grille de lecture des territoires pour le logement"
+title: "18,4% de la population réside dans un marché du logement tendu"
 output:
-  word_document:
-    fig_width: 8
-    fig_height: 8
-    fig_caption: true
+  html_notebook:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
 
 <!-- --- -->
-<!-- title: "18,4% de la population réside dans un marché du logement tendu" -->
+<!-- title: "Maille habitat : une nouvelle grille de lecture des territoires pour le logement" -->
 <!-- output: -->
-<!--   html_notebook: -->
-<!--     toc: true -->
-<!--     toc_float: -->
-<!--       collapsed: false -->
-<!--       smooth_scroll: false -->
+<!--   word_document: -->
+<!--     fig_width: 8 -->
+<!--     fig_height: 8 -->
+<!--     fig_caption: true -->
 <!-- --- -->
-
 
 
 
@@ -90,9 +89,9 @@ Pour rendre compte de l’état des marchés locaux du logement, 9 indicateurs o
 
 La représentation cartographique de cet indicateur met tout d’abord en évidence les centres urbains, ainsi que les espaces littoraux, de montagne, ou encore frontaliers. Il révèle non seulement les marchés du logement où les prix absolus sont très élevés (Île de France, Genevois français, littoraux…), mais également certains espaces où, malgré des prix relativement modérés, les revenus des habitants sont plutôt faibles, leur rendant ainsi l’accès au logement difficile ; c’est le cas par exemple pour Marseille ou Roubaix. Des phénomènes de gentrification sont susceptibles d’être à l’œuvre dans ces espaces.
 
-** Figure : pouvoir d'achat immobilier des ménages **
+**Figure : pouvoir d'achat immobilier des ménages**
 ```{r}
-choroLayer(spdf=map,var="indic.prix_rev.12",border=NA,legend.title.txt = "Prix du m2 rapporté \n au revenu médian",nclass = 8,
+choroLayer(spdf=map,var="indic.prix_rev.12",border=NA,legend.title.txt = "Prix du m2 rapporté \n au revenu \n médian",nclass = 8,
            legend.pos = "topleft",legend.values.rnd = 1)
 habille()
 ```
@@ -226,23 +225,23 @@ ggplot(don_cl,aes(classe,var,fill=Ecart)) + geom_tile() +
 classe <- m$lib_typo_maille
 leaf.col <- colorFactor(palette = cols, classe)
 # Version leaflet
-# leaflet(data=m) %>%
-#     addTiles(attribution = "SLC3") %>%
-#     addProviderTiles(providers$OpenStreetMap) %>%
-#     addLegend(pal = leaf.col, values = classe, opacity = 1,position = "bottomleft") %>%
-#     addPolygons(stroke = T,color=leaf.col(classe),weight = 1,fillOpacity = .5,opacity = 3,
-#                 highlightOptions = highlightOptions(color = "white", weight = 2,bringToFront = TRUE),
-#                 popup=classe)
+leaflet(data=m) %>%
+    addTiles(attribution = "SLC3") %>%
+    addProviderTiles(providers$OpenStreetMap) %>%
+    addLegend(pal = leaf.col, values = classe, opacity = 1,position = "bottomleft") %>%
+    addPolygons(stroke = T,color=leaf.col(classe),weight = 1,fillOpacity = .5,opacity = 3,
+                highlightOptions = highlightOptions(color = "white", weight = 2,bringToFront = TRUE),
+                popup=classe)
 
 # Version statique
-ordre <- unique(m$typo_maille) %>% as.integer()
-colMap <- cols[ordre]
-plot(map,border=NA)
-plot(st_geometry(nuts),col="lightgrey",border="white",add=T)
-typoLayer(spdf = map,var="lib_typo_maille",border=NA,col = colMap,legend.title.txt = "Type de maille",
-          legend.pos = "bottomleft",add=T)
-plot(st_geometry(st_centroid(labels)),add=T,pch=15)
-labelLayer(x=decale,txt="libgeo")
+# ordre <- unique(m$typo_maille) %>% as.integer()
+# colMap <- cols[ordre]
+# plot(map,border=NA)
+# plot(st_geometry(nuts),col="lightgrey",border="white",add=T)
+# typoLayer(spdf = map,var="lib_typo_maille",border=NA,col = colMap,legend.title.txt = "Type de maille",
+#           legend.pos = "bottomleft",add=T)
+# plot(st_geometry(st_centroid(labels)),add=T,pch=15)
+# labelLayer(x=decale,txt="libgeo")
 ```
 
 *Sources : calculs SDES*

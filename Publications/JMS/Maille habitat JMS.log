@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.23)  29 MAY 2018 16:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.23)  30 MAY 2018 11:37
 entering extended mode
 **"./Maille habitat JMS.tex"
 ("Maille habitat JMS.tex"
@@ -883,7 +883,7 @@ LaTeX Info: Redefining \degres on input line 31.
 LaTeX Info: Redefining \dots on input line 31.
 LaTeX Info: Redefining \up on input line 31.
 
-<head_jms2018.png, id=59, 455.301pt x 70.46326pt>
+<head_jms2018.png, id=67, 455.301pt x 70.46326pt>
 File: head_jms2018.png Graphic file (type png)
  <use head_jms2018.png>
 Package pdftex.def Info: head_jms2018.png used on input line 34.
@@ -918,129 +918,224 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
 [1
 
 {C:/Users/vivien.roussez/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./
-head_jms2018.png>] [2] <img/ACP.png, id=96, 551.05875pt x 419.31656pt>
+head_jms2018.png>] [2]
+<img/Indic_comm.png, id=103, 551.05875pt x 419.31656pt>
+File: img/Indic_comm.png Graphic file (type png)
+
+<use img/Indic_comm.png>
+Package pdftex.def Info: img/Indic_comm.png used on input line 107.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+ <img/ACP.png, id=104, 551.05875pt x 419.31656pt>
 File: img/ACP.png Graphic file (type png)
 
 <use img/ACP.png>
-Package pdftex.def Info: img/ACP.png used on input line 115.
+Package pdftex.def Info: img/ACP.png used on input line 121.
 (pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
+ [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.124 \emph{Source : calculs SDES}
+                                   <./img/Indic_comm.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 
  []
 
 
-Overfull \hbox (25.16402pt too wide) in paragraph at lines 123--148
+Overfull \hbox (25.16402pt too wide) in paragraph at lines 130--155
 [][] 
  []
 
-[3pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.149 
-       <./img/ACP.png>] <img/Typo_com.png, id=107, 551.05875pt x 419.31656pt>
+l.164 \begin{enumerate}
+                       pdfTeX warning (ext4): destination with the same identif
+ier (name{figure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.164 \begin{enumerate}
+                        <./img/ACP.png>]
+<img/Typo_com.png, id=123, 551.05875pt x 419.31656pt>
 File: img/Typo_com.png Graphic file (type png)
-
-<use img/Typo_com.png>
-Package pdftex.def Info: img/Typo_com.png used on input line 161.
+ <use img/Typo_com.png>
+Package pdftex.def Info: img/Typo_com.png used on input line 172.
 (pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
- [4pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
- has been already used, duplicate ignored
+
+[5pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.166 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.
-3}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.166 
-       <./img/Typo_com.png>]
-<img/SKATER.png, id=116, 551.05875pt x 419.31656pt>
+l.179 \item L
+             a classe 6 est principalement marquée par un taux de transacti...
+ <./img/Typo_com.png (PNG copy)>]
+<img/SKATER.png, id=135, 551.05875pt x 419.31656pt>
 File: img/SKATER.png Graphic file (type png)
  <use img/SKATER.png>
-Package pdftex.def Info: img/SKATER.png used on input line 188.
+Package pdftex.def Info: img/SKATER.png used on input line 201.
 (pdftex.def)             Requested size: 385.73848pt x 293.51958pt.
 
-[5] <img/Methodo_decoupage.png, id=127, 614.295pt x 370.38374pt>
+[6pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.206 \item C
+             onstruction de l'\textbf{arbre} portant minimal, en retenant le...
+ <./img/SKATER.png>]
+<img/Methodo_decoupage.png, id=147, 614.295pt x 370.38374pt>
 File: img/Methodo_decoupage.png Graphic file (type png)
 
 <use img/Methodo_decoupage.png>
-Package pdftex.def Info: img/Methodo_decoupage.png used on input line 201.
+Package pdftex.def Info: img/Methodo_decoupage.png used on input line 223.
 (pdftex.def)             Requested size: 430.00356pt x 259.26685pt.
- [6pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
+ [7pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.203 \end{center}
-                   <./img/SKATER.png>]
-<img/Decoupage.png, id=134, 614.295pt x 370.38374pt>
+l.231 
+       <./img/Methodo_decoupage.png>]
+<img/Decoupage.png, id=157, 614.295pt x 370.38374pt>
 File: img/Decoupage.png Graphic file (type png)
  <use img/Decoupage.png>
-Package pdftex.def Info: img/Decoupage.png used on input line 212.
+Package pdftex.def Info: img/Decoupage.png used on input line 236.
 (pdftex.def)             Requested size: 430.00356pt x 259.26685pt.
 
-[7pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) 
+[8pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.214 \end{center}
-                   <./img/Methodo_decoupage.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 232.
- [8pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
+l.255 \item L
+             es îles composées d'une seule commune (par exemple l'île d'Y...
+ <./img/Decoupage.png>]
+<img/Discrim_mailles.png, id=164, 551.05875pt x 419.31656pt>
+File: img/Discrim_mailles.png Graphic file (type png)
+
+<use img/Discrim_mailles.png>
+Package pdftex.def Info: img/Discrim_mailles.png used on input line 289.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+ [9pdfTeX warning (ext4): destination with the same identifier (name{figure.8})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.232 \end{document}
-                     <./img/Decoupage.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 232.
+l.292 ...ERVAL 2012, Filocom2013 et Insee, RP2014}
+                                                  ] [10pdfTeX warning (ext4): d
+estination with the same identifier (name{figure.9}) has been already used, dup
+licate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.305 \item C
+             lasse 3 : Mailles assez tendues des pôles urbains de province....
+ <./img/Discrim_mailles.png>]
+<img/Caract_typo.png, id=178, 551.05875pt x 419.31656pt>
+File: img/Caract_typo.png Graphic file (type png)
+
+<use img/Caract_typo.png>
+Package pdftex.def Info: img/Caract_typo.png used on input line 310.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--315
+
+ []
+
+[11pdfTeX warning (ext4): destination with the same identifier (name{figure.10}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.316 
+       <./img/Caract_typo.png>]
+<img/Typo_mailles.png, id=187, 551.05875pt x 419.31656pt>
+File: img/Typo_mailles.png Graphic file (type png)
+
+<use img/Typo_mailles.png>
+Package pdftex.def Info: img/Typo_mailles.png used on input line 325.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+ [12pdfTeX warning (ext4): destination with the same identifier (name{figure.11
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.335 
+       <./img/Typo_mailles.png (PNG copy)>]
+<img/Diversite.png, id=196, 551.05875pt x 419.31656pt>
+File: img/Diversite.png Graphic file (type png)
+ <use img/Diversite.png>
+Package pdftex.def Info: img/Diversite.png used on input line 339.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+
+[13pdfTeX warning (ext4): destination with the same identifier (name{figure.12}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.347 
+       <./img/Diversite.png (PNG copy)>]
+<img/Dynam.png, id=205, 551.05875pt x 419.31656pt>
+File: img/Dynam.png Graphic file (type png)
+ <use img/Dynam.png>
+Package pdftex.def Info: img/Dynam.png used on input line 351.
+(pdftex.def)             Requested size: 440.84758pt x 335.45369pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 360.
+ [14pdfTeX warning (ext4): destination with the same identifier (name{figure.13
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.360 \end{document}
+                     <./img/Dynam.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 360.
  ("Maille habitat JMS.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 232.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 232.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 360.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 360.
 Package rerunfilecheck Info: File `"Maille habitat JMS".out' has not changed.
-(rerunfilecheck)             Checksum: 8C74DB86580E4CB29FCD220C91DF9183;1068.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 232.
+(rerunfilecheck)             Checksum: E57819742E4F93941FAE03B4CADF324C;1205.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 360.
  ) 
 Here is how much of TeX's memory you used:
- 8669 strings out of 493323
- 126128 string characters out of 3126108
- 226412 words of memory out of 3000000
- 11992 multiletter control sequences out of 15000+200000
- 22286 words of font info for 61 fonts, out of 3000000 for 9000
+ 8733 strings out of 493323
+ 127087 string characters out of 3126108
+ 225412 words of memory out of 3000000
+ 12021 multiletter control sequences out of 15000+200000
+ 23050 words of font info for 62 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,12n,43p,910b,487s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,12n,43p,1571b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
-c\dpi600\eccc1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\p
-k\ljfour\jknappen\ec\dpi600\eccc1200.pk> <C:\Users\vivien.roussez\AppData\Local
+c\dpi600\ecrm0800.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\p
+k\ljfour\jknappen\ec\dpi600\eccc1095.pk> <C:\Users\vivien.roussez\AppData\Local
 \MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\vivien.ro
-ussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> 
+ussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc1200.pk> 
 <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
-pi600\ecti1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\l
-jfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\vivien.roussez\AppData\Local\Mi
-KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\vivien.rouss
-ez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:
+pi600\ecbx1440.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\l
+jfour\jknappen\ec\dpi600\ecti1095.pk> <C:\Users\vivien.roussez\AppData\Local\Mi
+KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\vivien.rouss
+ez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:
 \Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ecbx1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
-ur\jknappen\ec\dpi600\ectt1200.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTe
-X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\vivien.roussez\
-AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Us
+00\ecrm1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
+ur\jknappen\ec\dpi600\ecbx1095.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTe
+X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk> <C:\Users\vivien.roussez\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Us
 ers\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
-ecbx2488.pk><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmmi10.pfb><C:/Users/vivien.roussez/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/vivien.roussez
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:
-/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmr8.pfb><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "Maille habitat JMS.pdf" (8 pages, 294194 bytes).
+ecbx1728.pk> <C:\Users\vivien.roussez\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
+jknappen\ec\dpi600\ecbx2488.pk><C:/Users/vivien.roussez/AppData/Local/Programs/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/vivien.roussez/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/U
+sers/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb><C:/Users/vivien.roussez/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/vivien.roussez/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on "Maille habitat JMS.pdf" (14 pages, 566624 bytes).
 PDF statistics:
- 601 PDF objects out of 1000 (max. 8388607)
- 45 named destinations out of 1000 (max. 500000)
- 143 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 731 PDF objects out of 1000 (max. 8388607)
+ 73 named destinations out of 1000 (max. 500000)
+ 189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,20 +1,20 @@
 ---
 title: "Maille habitat : guide méthodologique"
 output:
-  word_document:
-    fig_width: 6
-    fig_height: 6
-    fig_caption: true
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
 ---
 
 <!-- --- -->
 <!-- title: "Maille habitat : guide méthodologique" -->
 <!-- output: -->
-<!--   html_document: -->
-<!--     toc: true -->
-<!--     toc_float: -->
-<!--       collapsed: true -->
-<!--       smooth_scroll: false -->
+<!--   word_document: -->
+<!--     fig_width: 6 -->
+<!--     fig_height: 6 -->
+<!--     fig_caption: true -->
 <!-- --- -->
 
 <style> body {text-align: justify}  </style>
@@ -39,6 +39,7 @@ require(spdep)
 
 load("M:/GEOGRAPHIE/GEO2016/Habillage_FR.RData")
 load("../bdd_indic.RData")
+load("Diffusion.RData")
 load("../dat.RData")
 
 #load("Diffusion.RData")
@@ -225,9 +226,14 @@ C'est donc le degré de tension (défini par un pouvoir d'achat immobilier en re
 
 ```{r}
 cols <- brewer.pal(n = 6,name =  "Dark2")
-ordre <- unique(as.factor(map$lib_typo_maille)) %>% as.integer()
+ordre <- unique(m$typo_maille) %>% as.integer()
 colMap <- cols[ordre]
-typoLayer(spdf = map,var="lib_typo_maille",border=NA,col = colMap,legend.title.txt = "Type de maille")
+plot(map,border=NA)
+plot(st_geometry(nuts),col="lightgrey",border="white",add=T)
+typoLayer(spdf = map,var="lib_typo_maille",border=NA,col = colMap,legend.title.txt = "Type de maille",
+          legend.pos = "bottomleft",add=T)
+plot(st_geometry(st_centroid(labels)),add=T,pch=15)
+labelLayer(x=decale,txt="libgeo")
 ```
 
 *Sources : calculs SDES*
@@ -246,12 +252,12 @@ La typologie peut-être utilisée pour agréger des données relatives à l'habi
 pop <- read.csv2("Data/RP_Hist.csv") %>% 
   merge(zonages[,c("codgeo",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
   merge(cl,by.x=choix,by.y=choix) %>%
-  group_by(clust) %>%
+  group_by(lib_typo_maille) %>%
   summarise(pop14 = sum(P14_POP),pop99=sum(D99_POP)) %>%
-  mutate(evol_pop=100*((pop14/pop99)^(1/15)-1),Classe=paste("Classe",clust))
+  mutate(evol_pop=100*((pop14/pop99)^(1/15)-1),Classe=lib_typo_maille)
 ggplot(data=pop,aes(x=Classe,weight=evol_pop,fill=Classe)) + geom_bar() +
-  ylab("Evolution de la population") + guides(fill=FALSE) + scale_fill_manual(values=cols)
-
+  ylab("Evolution de la population") + scale_fill_manual(values=cols) +
+  theme(axis.text.x=element_blank(),axis.title.x=element_blank())
 ```
 
 *Sources : Insee RP2014, calculs SDES*
@@ -264,8 +270,9 @@ La maille peut être utilisée pour représenter tout indicateur lié à l'habit
 
 ```{r}
 pop <- read.csv2("Data/RP_Hist.csv") %>% 
-  merge(zonages[,c("codgeo","Surface",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
+  merge(zonages[,c("codgeo",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
   merge(cl,by.x=choix,by.y=choix) %>%
+  merge(mapCom@data[,c("Codgeo","Surface")],by.x="CODGEO",by.y="Codgeo") %>% 
   group_by_at(choix) %>%
   summarise(pop14 = sum(P14_POP),surf=sum(Surface)) %>%
   mutate(densite=pop14/surf)
