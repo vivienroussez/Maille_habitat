@@ -56,20 +56,20 @@
 
 \section*{Résumé}
 
-Le SDES a lancé en 2017 un projet visant à construire un maillage du territoire à même de rendre compte des disparités territoriales sur les enjeux propres au logement. En effet, ni les échelles administratives, ni les zonages d'études de l'Insee (zones d'emploi, bassins de vie) ne sont adaptées pour l'analyse localisée du logement, car ils mêlent dans les mêmes mailles des types d'habitat différents (urbain et périurbains notamment). Pour cela, neuf indicateurs représentatifs de l'équilibre des marchés du logement ont été sélectionné pour alimenter la méthode de \textbf{régionalisation}, qui regroupe les communes en bassins homogènes. La méthode retenue est l'algorithme \textbf{SKATER} (Spatial Klustering Analysis by Tree Edge Removal), qui s'appuie sur l'exploration de graphe et notamment la notion d'arbre portant minimal. \\
+Le SDES a lancé en 2017 un projet visant à construire un maillage du territoire à même de rendre compte des disparités territoriales sur les enjeux propres au logement. En effet, ni les échelles administratives, ni les zonages d'études de l'Insee (zones d'emploi, bassins de vie) ne sont adaptés pour l'analyse localisée du logement, car ils mêlent dans les mêmes mailles des types d'habitat différents (urbain et périurbains notamment). Pour cela, neuf indicateurs représentatifs de l'équilibre des marchés du logement ont été sélectionnés pour alimenter la méthode de \textbf{régionalisation}, qui regroupe les communes en bassins homogènes. La méthode retenue est l'algorithme \textbf{SKATER} (Spatial Klustering Analysis by Tree Edge Removal), qui s'appuie sur l'exploration de graphes, et notamment la notion d'arbre portant minimal. \\
 
 Différentes simulations ont été menées pour déterminer la taille de ces mailles, et les résultats ont fait l'objet de tests au niveau régional. Ces mailles mettent au premier plan les disparités propres au logement (pouvoir d'achat immobilier, taille des ménages), alors que la maille communale fait principalement ressortir les disparités liées au degré d'urbanité. Elle permet également de distinguer les villes-centre de leur périphérie, et donc d'isoler les enjeux propres à ces espaces très différents sur le plan du logement. \\
 
-L'analyse de ces mailles permet de mettre en exergue six types de marchés locaux du logement, principalement distingués par le niveau des prix, la composition des ménages (leur taille) et du parc de logement. Au fil du temps, les spécificités de ces marchés se renforcent et ceux déjà en tension voient leurs déséquilibres se renforcer. A l'inverse, le ralentissement démographique et le vieillissement à l'\oe uvre dans les espaces faiblement peuplés contribuent à la faible dynamique des marchés où la demande est déjà modérée. Par ailleurs, ces marchés présentent un degré inégal d'homogénéité, et on trouve d'avantage de diversité entre les communes de marchés de l'Est de la France.
+L'analyse de ces mailles permet de mettre en exergue six types de marchés locaux du logement, principalement distingués par le niveau des prix, la composition des ménages (leur taille) et du parc de logement. Au fil du temps, les spécificités de ces marchés se renforcent et ceux déjà en tension voient leurs déséquilibres se renforcer. A l'inverse, le ralentissement démographique et le vieillissement à l'\oe uvre dans les espaces faiblement peuplés contribuent à la faible dynamique des marchés, où la demande est déjà modérée. Par ailleurs, ces marchés présentent un degré inégal d'homogénéité, et on trouve d'avantage de diversité entre les communes des marchés de l'Est de la France.
 
 \section*{Abstract}
 
-Partant du constat que les mailles géographiques usuelles ne permettent pas une analyse fine des marchés du logement, le SDES a élaboré une maille ad hoc. Pour cela, 9 indicateurs emblématiques de la demande et de l'offre des marchés locaux du logement ont été sélectionnés et ont alimenté une méthode de \textbf{régionalisation} utilisant la théorie des graphes et les arbres portants minimaux. Ce maillage permet une lecture facilitée des dynamiques territoriales sur les plans du logement et de la démographie.
+Partant du constat que les échelles géographiques usuelles ne permettent pas une analyse fine des marchés du logement, le SDES a élaboré une maille ad hoc. Pour cela, neuf indicateurs emblématiques de la demande et de l'offre des marchés locaux du logement ont été sélectionnés et ont alimenté une méthode de \textbf{régionalisation} utilisant la théorie des graphes et les arbres portants minimaux. Ce maillage permet une lecture facilitée des dynamiques territoriales sur les plans du logement et de la démographie.
 
 
 \section*{Introduction}
 
-Les mailles habitat constuites par le SDES ont pour objectif de constituer une échelle pertinente pour l'observation et l'analyse des enjeux territoriaux liés à l'habitat. Elle permet de répondre à trois objectifs :
+Les mailles habitat construites par le SDES ont pour objectif de constituer une échelle pertinente pour l'observation et l'analyse des enjeux territoriaux liés à l'habitat. Elle permet de répondre à trois objectifs :
 
 \begin{itemize}
 \item Lisser visuellement l'information pour donner des cartes lisibles
@@ -90,7 +90,7 @@ Ces indicateurs sont calculés à partir de trois sources : recensements de la p
 
 \begin{enumerate}
 \item L'indicateur de jeunesse du parc : part des logement récents (construits après 1975) rapportés à la part des logements anciens (construits avant 1949). 
-\item Durée d'occupation médiane des logements
+\item Durée d'occupation médiane des logements (qui donne à voir les statuts d'occupation)
 \item Taux de transactions dans le marché de l'ancien (nombre de transactions rapporté au nombre de logements)
 \item Part de logements sociaux
 \item Part de logements en situation de suroccupation
@@ -99,7 +99,6 @@ Ces indicateurs sont calculés à partir de trois sources : recensements de la p
 \item Part des résidences secondaires
 \item Part de logements vacants
 \end{enumerate}
-
 
 \begin{figure}[H]
 \caption{ACP sur les indicateurs retenus}
@@ -160,10 +159,10 @@ Axe 6         & Suroccupation                  & +    & Couronnes périurbaines 
 \subsubsection{Classification communale}
 
 
-Par la suite, on effectue une classification des communes par centres mobiles, opérée sur les coordonnées factorielles des 6 premiers axes. Cette classification permet de mettre en exergues six groupes de communes qui permettent de rendre compte des principales disparités territoriales attendues. 
+Par la suite, on effectue une classification des communes par centres mobiles (algorithme k-means), opérée sur les coordonnées factorielles des 6 premiers axes. Cette classification permet de mettre en exergues six groupes de communes qui permettent de rendre compte des principales disparités territoriales attendues. 
 \begin{enumerate}
-\item La classe 1 est la classe la plus proche de la moyenne sur l'ensemble des dimensions. Le parc y est toutefois légèrement plus récent que la moyenne, ainsi qu'une taille des ménages nettement supérieure à la moyenne. Elle correspond principalement aux communes des couronnes périurbaines de aires urbaines ;
-\item La classe 2 présente le parc le plus ancien. Elle se démarque démarque également par une durée d'occupation plus importante. Elle est composée de communes distribuées le long de la diagonale nord-est/sud-est.
+\item La classe 1 est la classe la plus proche de la moyenne sur l'ensemble des dimensions. Le parc y est toutefois légèrement plus récent que la moyenne, ainsi qu'une taille des ménages nettement supérieure à la moyenne. Elle correspond principalement aux communes des couronnes périurbaines des aires urbaines ;
+\item La classe 2 présente le parc le plus ancien. Elle se démarque également par une durée d'occupation plus importante. Elle est composée de communes distribuées le long de la diagonale nord-est/sud-est.
 \item La classe 3 présente un taux de vacance relativement important, et des prix de l'immobilier les plus modérés. On y trouve les communes peu denses situées dans les espaces interstitiels du réseau urbain ;
 
 \begin{figure}[H]
@@ -174,7 +173,7 @@ Par la suite, on effectue une classification des communes par centres mobiles, o
 \end{figure}
 \emph{Source : calculs SDES}
 
-\item La classe 4 correspond aux marchés les plus tendus : elle se détache sur le deuxième axe factoriel. Le parc de logement de cette classe est putôt récent et la proportion de logements sociaux y est élevée (ils sont d'ailleurs concentrés dans cette classe). La durée d'occupation y est également légèrement plus élevée que la moyenne. On y trouve principalement des espaces urbains avec les villes-centre des principales aires urbaines, ainsi que les espaces littoraux de la Méditerranée et de l'Atlantique.
+\item La classe 4 correspond aux marchés les plus tendus : elle se détache sur le deuxième axe factoriel. Le parc de logement de cette classe est plutôt récent et la proportion de logements sociaux y est élevée (ils sont d'ailleurs concentrés dans cette classe). La durée d'occupation y est également légèrement supérieure à la moyenne. On y trouve principalement des espaces urbains avec les villes-centre des principales aires urbaines, ainsi que les espaces littoraux de la Méditerranée et de l'Atlantique.
 \item La classe 5 présente des prix relativement élevés, mais un parc très différent, puisque plus ancien et comptant davantage de résidences secondaires. il s'agit de communes correspondant aux espaces touristiques, notamment des zones de montagne.
 \item La classe 6 est principalement marquée par un taux de transaction relativement élevé, mais dans des marchés peu tendus, et dont le parc est relativement ancien. Il s'agit de communes de faible de densité démographique, essentiellement située dans le Nord du pays.
 \end{enumerate}
@@ -193,7 +192,7 @@ Cet algorithme fonctionne en 4 étapes :
 
 \begin{enumerate}
 \item Construction de la matrice de contiguïté $\rightarrow$ obtention d'un \emph{graphe} (un noeud = une commune et un lien = relation de contiguïté entre deux communes)
-\item Pondération de ce graphe avec les dissimilarités calculées à partir des indicateurs (distance euclidienne)
+\item Pondération des liens de ce graphe avec les dissimilarités calculées à partir des indicateurs (distance euclidienne)
 
 \begin{figure}[H]
 \caption{Illustration des étapes de SKATER sur les Hauts de Seine}
@@ -226,7 +225,7 @@ L'ordre de grandeur du nombre de communes qui se trouvent dans les zones concern
 \emph{Source : calculs SDES}
 
 
-On répartit ensuite le reste des communes dans les 4 cadrans du repère orthonormé ayant pour origine ce barycentre. Toutefois, les axes de ce repère passant le long de frontières, on conserve en partie l'effet frontière. Pour contourner ce biais, on effectue une rotation du repère orthonormé de 45 degrés.
+On répartit ensuite le reste des communes dans les 4 cadrans du repère orthonormé ayant pour origine ce barycentre. Toutefois, les axes de ce repère passant le long d'une limite régionale, on conserve en partie l'effet frontière. Pour contourner ce biais, on effectue une rotation du repère orthonormé de 45 degrés.
 Cette méthode fait néanmoins apparaître, selon les cas de figure, de très petites zones isolées, et des macro-zones qui ne sont pas d'un seul tenant. Une dernière étape consiste donc à rattacher les isolats à une macro-zone contiguë de taille suffisante, ou à séparer les parties non contiguës des grandes macro-zones.
 
 
@@ -291,7 +290,7 @@ C'est donc le degré de tension (défini par un pouvoir d'achat immobilier en re
 \end{figure}
 \emph{Sources : calculs SDES d'après BIEN et PERVAL 2012, Filocom2013 et Insee, RP2014}
 
-Les carte en figure 8 (notamment l'anamorphose) montrent la capacité du maillage à faire différencier les villes-centre des périphéries, ce qui n'est pas le cas pour les maillages d'études usuels.
+Les carte en figure 8 (notamment l'anamorphose) montrent la capacité du maillage à différencier les villes-centre des périphéries, ce qui n'est pas le cas pour les autres maillages d'études.
 
 \subsection{Typologie des mailles}
 
@@ -300,27 +299,27 @@ Ces disparités permettent de regrouper les marchés du logement en 6 grands typ
 \begin{enumerate}
 \item Classe 1 : Mailles détendues à dominante rurale. Les mailles appartenant à cette catégorie sont marquées par les prix relatifs les plus bas (figure 3); parallèlement, le taux de vacance y est le plus élevé et le parc le plus ancien. Les ménages y sont également plus petits, et la durée d'occupation des logements est plus élevée que la moyenne. Les mailles de cette classe se trouvent essentiellement dans les espaces de faible densité, hors des zones de montagne, principalement le long de la diagonale Nord-Est / Sud-Ouest (figure 4). Leur empreinte sur le territoire est importante en termes de superficie, mais ces mailles regroupent un peu moins de 19 \% de la population.
 
-\item Classe 2 : Mailles peu tendues des couronnes périurbaines. Les ménages sont plutôt de grande taille, la vacance y est faible. Ce groupe est le plus proche de la moyenne sur l'ensemble des indicateurs. Les prix y sont modérés relativement aux revenus, et la durée d'occupation plutôt élevée. La sur-occupation des logements et le taux de vacances sont eux en retrait. Ces mailles se situent essentiellement en périphérie des principales aires urbaines et dessinent le réseau inter-urbain ; Près de 29 \% de la population y réside.
+\item Classe 2 : Mailles peu tendues des couronnes périurbaines. Les ménages sont plutôt de grande taille, la vacance y est faible. Ce groupe est le plus proche de la moyenne sur l'ensemble des indicateurs. Les prix y sont modérés relativement aux revenus, et la durée d'occupation plutôt élevée. La sur-occupation des logements et le taux de vacance sont eux en retrait. Ces mailles se situent essentiellement en périphérie des principales aires urbaines et dessinent le réseau inter-urbain ; Près de 29 \% de la population y réside.
 
-\item Classe 3 : Mailles assez tendues des pôles urbains de province. Cette classe de mailles présentent un pouvoir d'achat immobilier un peu en retrait par rapport aux deux précédentes, proche de la moyenne nationale. En revanche, les ménages y sont significativement plus petits et la durée d'occupation en retrait. Ces mailles comptent relativement plus de logements sociaux que les deux types précédents. De fait, on les trouve au cœur des aires urbaines de provinces : ce sont donc des espaces urbains, où la population est plus jeune, donc avec une plus faible proportion de familles, ce qui explique la faible taille des ménages et le turnover plus important. Environ un quart de la population est regroupée dans cette classe.
+\item Classe 3 : Mailles assez tendues des pôles urbains de province. Cette classe de mailles présente un pouvoir d'achat immobilier un peu en retrait par rapport aux deux précédentes, proche de la moyenne nationale. En revanche, les ménages y sont significativement plus petits et la durée d'occupation en retrait. Ces mailles comptent relativement plus de logements sociaux que les deux types précédents. De fait, on les trouve au c\oe ur des aires urbaines de provinces : ce sont donc des espaces urbains, où la population est plus jeune, donc avec une plus faible proportion de familles, ce qui explique la faible taille des ménages et le turnover plus important. Environ un quart de la population est regroupée dans cette classe.
 
 \begin{figure}[H]
-\caption{Indicateurs discriminants}
+\caption{Caractérisation des types de mailles}
 \begin{center}
 \includegraphics[scale=.8]{img/Caract_typo.png}
 \end{center}
 \end{figure}
 \emph{Source : calculs SDES} \\
 \emph{Lecture : La classe 4 se caractérise par un écart à la moyenne significatif et positif sur l'indice de jeunesse. La part de logements vacants est en revanche en retrait par rapport à la moyenne nationale dans les classes 4 et 5} \\
-\item Classe 4 : Mailles tendues des couronnes des aires urbaines attractives.  Ces mailles sont en très petit nombre, mais sont très spécifique : le parc de logement y est très récent par rapport aux autres et le pouvoir d’achat en retrait par rapport aux 3 classes précédentes. Par ailleurs, la taille des ménages est plutôt importante et la sur-occupation nettement en retrait. Elles se situent dans les espaces périurbains proches des aires urbaines dont la population a fortement crû ces dernières années. Par exemple, on y trouve l’entière banlieue de Toulouse, mais également la périphérie ouest de Bordeaux ou encore l’est de Lyon. L’attractivité résidentielle de ces mailles a donc conduit à des flux de construction de logements importants, mais s’est également traduit par un accroissement des prix. Elles regroupent seulement 2\% de la population.
+\item Classe 4 : Mailles tendues des couronnes des aires urbaines attractives.  Ces mailles sont en très petit nombre, mais sont très spécifiques : le parc de logement y est très récent par rapport aux autres et le pouvoir d'achat en retrait par rapport aux 3 classes précédentes. Par ailleurs, la taille des ménages est plutôt importante et la sur-occupation nettement en retrait. Elles se situent dans les espaces périurbains proches des aires urbaines dont la population a fortement crû ces dernières années. Par exemple, on y trouve l'entière banlieue de Toulouse, mais également la périphérie ouest de Bordeaux ou encore l'est de Lyon. L'attractivité résidentielle de ces mailles a donc conduit à des flux de construction de logements importants, mais s'est également traduite par un accroissement des prix. Elles regroupent seulement 2\% de la population.
 
-\item Classe 5 : Mailles tendues des espaces touristiques. Cette classe présente avant tout un pouvoir d’achat immobilier en retrait : les prix y sont élevés relativement aux revenus des habitants et un taux de sur-occupation plus élevé. La caractéristique principale est avant tout la forte part de résidences secondaires qu’on y trouve. De fait, ces mailles se situent dans les espaces à vocation touristique, littoraux et montagnards. Le marché des résidences secondaire y pousse les prix à la hausse et accroît le décalage avec les revenus des résidents, ce qui leur confère les caractéristiques de marchés tendus. Ces mailles regroupent environ 7\% de la population.
+\item Classe 5 : Mailles tendues des espaces touristiques. Cette classe présente avant tout un pouvoir d'achat immobilier en retrait : les prix y sont élevés relativement aux revenus des habitants et le taux de sur-occupation plus élevé. La caractéristique principale est avant tout la forte part de résidences secondaires qu'on y trouve. De fait, ces mailles se situent dans les espaces à vocation touristique, littoraux et montagnards. Le marché des résidences secondaires y pousse les prix à la hausse et accroît le décalage avec les revenus des résidents, ce qui leur confère les caractéristiques de marchés tendus. Ces mailles regroupent environ 7\% de la population.
 
-\item Classe 6 : Mailles à difficultés prononcées d’accès au logement. Ce dernier groupe contient les marchés les plus tendus : le pouvoir d’achat immobilier y est nettement en retrait, et le taux de sur-occupation des logements est élevé, tout comme le nombre de personnes par ménages. On y trouve également la plus forte proportion de logements sociaux. Ces mailles correspondent aux marchés tendus d’Île de France, ainsi que ceux où le pouvoir d’achat immobilier des ménages est en retrait du fait de faibles revenus (Roubais, Marseille). 18,4\% de la population réside dans ces marchés dont l’empreinte géographique est toutefois très restreinte.
+\item Classe 6 : Mailles à difficultés prononcées d'accès au logement. Ce dernier groupe contient les marchés les plus tendus : le pouvoir d'achat immobilier y est nettement en retrait, et le taux de sur-occupation des logements est élevé, tout comme le nombre de personnes par ménages. On y trouve également la plus forte proportion de logements sociaux. Ces mailles correspondent aux marchés tendus d'Île-de-France, ainsi que ceux où le pouvoir d'achat immobilier des ménages est en retrait du fait de faibles revenus (Roubais, Marseille). 18,4\% de la population réside dans ces marchés dont l'empreinte géographique est toutefois très restreinte.
 \end{enumerate}
 
 \begin{figure}[H]
-\caption{Indicateurs discriminants}
+\caption{Typologie des mailles}
 \begin{center}
 \includegraphics[scale=.8]{img/Typo_mailles.png}
 \end{center}
@@ -331,7 +330,7 @@ Ces disparités permettent de regrouper les marchés du logement en 6 grands typ
 
 \subsubsection{Cohésion}
 
-La typologie précédente permet de mettre en évidence les grandes disparités qui traversent les différents marchés du logement. Mais ces marchés présentent de l'hétérogénéité également entre les communes qui les composent. Le score de diversité \footnote{Pour mesurer les disparités entre les communes au sein d'un même marché du logement (maille), on calcule un score de diversité : il s'agit de la somme des écarts-types, calculés sur chacun des indicateurs (qui ont été centrés-réduits au préalable). Plus ce score est élevé, plus l'hétérogénéité de la maille considérée est importante. Certaines mailles n'étant constituées que d’une seule commune (généralement les villes-centres des aires urbaines), ce score n'est pas calculable.} montre des spécificités territoriales marquées. En premier lieu, les communes dans l'urbain et le périurbain sont plus homogènes que les espaces de faible densité démographique. Par ailleurs, les mailles de la classe correspondant aux espaces à vocation touristique présentent une forte hétérogénéité interne (figure 5) c'est le cas par exemple de la Normandie et du plateau de Langres. Une partie de la couronne périurbaine de Paris, à l'exception de l'Ouest présente également des marchés très disparates. A l'opposé, l'Ouest du pays apparaît plus homogène, notamment la Bretagne et les Pays de la Loire. Le département du Nord, ainsi que l'Alsace et le Lyonnais présentent également de moindres disparités internes.
+La typologie précédente permet de mettre en évidence les grandes disparités qui traversent les différents marchés du logement. Mais ces marchés présentent de l'hétérogénéité également entre les communes qui les composent. Le score de diversité \footnote{Pour mesurer les disparités entre les communes au sein d'un même marché du logement (maille), on calcule un score de diversité : il s'agit de la somme des écarts-types, calculés sur chacun des indicateurs (qui ont été centrés-réduits au préalable). Plus ce score est élevé, plus l'hétérogénéité de la maille considérée est importante. Certaines mailles n'étant constituées que d'une seule commune (généralement les villes-centres des aires urbaines), ce score n'est pas calculable.} montre des spécificités territoriales marquées. En premier lieu, les communes dans l'urbain et le périurbain sont plus homogènes que les espaces de faible densité démographique. Par ailleurs, les mailles de la classe correspondant aux espaces à vocation touristique présentent une forte hétérogénéité interne (figure 5) ; c'est le cas également de la Normandie et du plateau de Langres. Une partie de la couronne périurbaine de Paris, à l'exception de l'ouest présente aussi des marchés très disparates. A l'opposé, l'ouest du pays apparaît plus homogène, notamment la Bretagne et les Pays de la Loire. Le département du Nord, ainsi que l'Alsace et le Lyonnais présentent également de moindres disparités internes.
 
 \begin{figure}[H]
 \caption{Score de diversité}

@@ -1,6 +1,9 @@
 require(tidyverse)
 require(FactoMineR)
 
+setwd("M:/ETUDES/Maille_habitat/")
+
+load("M:/GEOGRAPHIE/GEO2016/Habillage_FR.RData")
 load("dat.RData")
 load("bdd_indic.RData")
 par(mfrow=c(1,1))
@@ -125,3 +128,23 @@ cc  <- data.frame(Stocks=rownames(cc),cc) %>%
 ggplot(cc,aes(Stocks,Evolutions,fill=Correlation)) + geom_tile() + 
   scale_fill_gradient2(low="red",high="blue") + xlab("Stocks") + 
   ylab("Evolutions") + theme(axis.text.x = element_text(angle=90))
+
+
+# Maille en version leaflet
+
+leaflet() %>% addTiles( attribution = "SLC3") %>%
+  addProviderTiles(providers$OpenStreetMap) %>%
+  addPolygons(data = reproj, opacity = 3,   color = "black", stroke = TRUE, weight = 1, popup = reproj@data[,choix],
+              fill = T, fillColor = "#444444", fillOpacity = 0.2,
+              highlightOptions = highlightOptions(color = "white", weight = 2,
+                                                  bringToFront = TRUE))
+
+pop <- read.csv2("Publications/Data/RP_Hist.csv") %>% 
+  merge(zonages[,c("codgeo",choix)],by.x="CODGEO",by.y="codgeo",all.y=T) %>%
+  merge(cl,by.x=choix,by.y=choix) %>%
+  group_by(lib_typo_maille) %>%
+  summarise(pop14 = sum(P14_POP),pop99=sum(D99_POP)) %>%
+  mutate(evol_pop=100*((pop14/pop99)^(1/15)-1),Classe=lib_typo_maille)
+ggplot(data=pop,aes(x=Classe,weight=evol_pop,fill=Classe)) + geom_bar() +
+  ylab("Evolution de la population") + scale_fill_manual(values=cols) +
+  theme(axis.text.x=element_blank(),axis.title.x=element_blank())
