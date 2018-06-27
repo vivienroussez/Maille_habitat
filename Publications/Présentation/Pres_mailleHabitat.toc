@@ -1,0 +1,6 @@
+\babel@toc {french}{}
+\beamer@sectionintoc {1}{Motifs et objectifs}{3}{0}{1}
+\beamer@sectionintoc {2}{M\IeC {\'e}thode de travail}{5}{0}{2}
+\beamer@sectionintoc {3}{ Indicateurs constitutifs}{8}{0}{3}
+\beamer@sectionintoc {4}{La r\IeC {\'e}gionalisation}{10}{0}{4}
+\beamer@sectionintoc {5}{R\IeC {\'e}sultats}{15}{0}{5}
